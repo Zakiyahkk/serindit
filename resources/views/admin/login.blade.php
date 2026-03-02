@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Sembari</title>
-    
+    <title>Admin Login - Serindit</title>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <style>
         * {
             margin: 0;
@@ -295,8 +295,8 @@
             <!-- Logo Section -->
             <div class="logo-section">
                 <img src="{{ asset('img/logobalai.png') }}" alt="Logo Balai Bahasa">
-                <h1>Sembari Admin</h1>
-                <p>Perpustakaan Digital</p>
+                <h1>Serindit Admin</h1>
+                <p>Majalah Digital</p>
             </div>
 
             <!-- Error Message -->
@@ -316,12 +316,12 @@
                     <label for="login" class="form-label">Email atau Username</label>
                     <div class="input-wrapper">
                         <i class="bi bi-person-circle input-icon"></i>
-                        <input 
-                            type="text" 
-                            class="form-control" 
-                            id="login" 
-                            name="login" 
-                            value="{{ old('login') }}" 
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="login"
+                            name="login"
+                            value="{{ old('login') }}"
                             placeholder="Masukkan email atau username"
                             required
                             autofocus>
@@ -333,11 +333,11 @@
                     <label for="password" class="form-label">Kata Sandi</label>
                     <div class="input-wrapper">
                         <i class="bi bi-lock-fill input-icon"></i>
-                        <input 
-                            type="password" 
-                            class="form-control" 
-                            id="password" 
-                            name="password" 
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
                             placeholder="Masukkan kata sandi"
                             required>
                         <button type="button" class="password-toggle" onclick="togglePassword()">
@@ -365,7 +365,7 @@
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             const toggleIcon = document.getElementById('toggleIcon');
-            
+
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 toggleIcon.classList.remove('bi-eye-fill');

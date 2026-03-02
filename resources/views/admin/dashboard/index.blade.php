@@ -275,7 +275,7 @@
 <div class="dash-hero">
     <i class="bi bi-book-half hero-icon"></i>
     <h2>{{ $greeting }}, {{ session('admin_username', 'Admin') }}! 👋</h2>
-    <p>Selamat datang di Panel Admin Perpustakaan Digital Sembari</p>
+    <p>Selamat datang di Panel Admin Serindit</p>
     <div class="hero-date">
         <i class="bi bi-calendar3 me-1"></i>
         {{ $now->translatedFormat('l, d F Y') }}
@@ -290,9 +290,8 @@
                 <i class="bi bi-book-fill"></i>
             </div>
             <div class="stat-info">
-                <p>Total Buku</p>
+                <p>Total Majalah</p>
                 <h3 style="color:#6366f1;">{{ $totalBooks }}</h3>
-                <small>Koleksi digital</small>
             </div>
         </div>
     </div>
@@ -304,7 +303,6 @@
             <div class="stat-info">
                 <p>Kategori</p>
                 <h3 style="color:#10b981;">{{ $totalCategories }}</h3>
-                <small>Jenis konten</small>
             </div>
         </div>
     </div>
@@ -314,9 +312,8 @@
                 <i class="bi bi-eye-fill"></i>
             </div>
             <div class="stat-info">
-                <p>Total Views</p>
+                <p>Total Pengunjung</p>
                 <h3 style="color:#f59e0b;">{{ number_format($totalViews) }}</h3>
-                <small>Kunjungan buku</small>
             </div>
         </div>
     </div>
@@ -326,9 +323,8 @@
                 <i class="bi bi-heart-fill"></i>
             </div>
             <div class="stat-info">
-                <p>Total Likes</p>
+                <p>Total Disukai</p>
                 <h3 style="color:#ef4444;">{{ number_format($totalLikes) }}</h3>
-                <small>Disukai pembaca</small>
             </div>
         </div>
     </div>
@@ -345,7 +341,7 @@
                     <span class="hdr-icon" style="background:linear-gradient(135deg,#6366f1,#4f46e5);">
                         <i class="bi bi-clock-history"></i>
                     </span>
-                    Buku Terbaru
+                    Majalah Terbaru
                 </h5>
                 <a href="{{ route('admin.books.index') }}" class="btn-see-all">
                     Lihat Semua <i class="bi bi-arrow-right"></i>
@@ -379,9 +375,9 @@
             @else
                 <div class="empty-dash">
                     <i class="bi bi-inbox"></i>
-                    <p>Belum ada buku yang ditambahkan</p>
+                    <p>Belum ada majalah yang ditambahkan</p>
                     <a href="{{ route('admin.books.create') }}" class="btn-primary-custom">
-                        <i class="bi bi-plus-circle-fill"></i> Tambah Buku Pertama
+                        <i class="bi bi-plus-circle-fill"></i> Tambah Majalah Pertama
                     </a>
                 </div>
             @endif
@@ -405,15 +401,15 @@
                 <a href="{{ route('admin.books.create') }}" class="qa-btn qa-purple">
                     <div class="qa-icon"><i class="bi bi-plus-circle-fill"></i></div>
                     <div class="qa-text">
-                        Tambah Buku Baru
-                        <small>Upload buku ke perpustakaan</small>
+                        Tambah Majalah Baru
+                        <small>Upload majalah</small>
                     </div>
                 </a>
                 <a href="{{ route('admin.books.index') }}" class="qa-btn qa-green">
                     <div class="qa-icon"><i class="bi bi-list-ul"></i></div>
                     <div class="qa-text">
-                        Kelola Buku
-                        <small>Lihat & edit semua buku</small>
+                        Kelola Majalah
+                        <small>Lihat & edit semua majalah</small>
                     </div>
                 </a>
                 @if(strtolower(session('admin_role')) === 'super_admin')
@@ -439,21 +435,21 @@
                 </h5>
             </div>
             <div class="lib-stat-row">
-                <div class="stat-label"><span class="dot" style="background:#6366f1;"></span>Total Views</div>
+                <div class="stat-label"><span class="dot" style="background:#6366f1;"></span>Total Dilihat</div>
                 <div class="stat-val">{{ number_format($totalViews) }}</div>
             </div>
             <div class="lib-stat-row">
-                <div class="stat-label"><span class="dot" style="background:#ef4444;"></span>Total Likes</div>
+                <div class="stat-label"><span class="dot" style="background:#ef4444;"></span>Total Disukai</div>
                 <div class="stat-val">{{ number_format($totalLikes) }}</div>
             </div>
             <div class="lib-stat-row">
-                <div class="stat-label"><span class="dot" style="background:#10b981;"></span>Total Reads</div>
+                <div class="stat-label"><span class="dot" style="background:#10b981;"></span>Total Pembaca</div>
                 <div class="stat-val">{{ number_format($totalReads) }}</div>
             </div>
-            <div class="lib-stat-row">
-                <div class="stat-label"><span class="dot" style="background:#f59e0b;"></span>Jenis Buku</div>
+            {{-- <div class="lib-stat-row">
+                <div class="stat-label"><span class="dot" style="background:#f59e0b;"></span>Jenis Majalah</div>
                 <div class="stat-val">{{ $totalBookTypes }}</div>
-            </div>
+            </div> --}}
             <div class="lib-stat-row">
                 <div class="stat-label"><span class="dot" style="background:#0ea5e9;"></span>Kategori</div>
                 <div class="stat-val">{{ $totalCategories }}</div>

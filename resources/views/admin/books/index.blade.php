@@ -1,11 +1,11 @@
 @extends('admin.layout')
 
-@section('title', 'Daftar Buku')
+@section('title', 'Daftar Majalah')
 
 @push('styles')
 <style>
     /* ══════════════════════════════════
-       PAGE HERO — Buku (Ungu)
+       PAGE HERO — Majalah (Ungu)
     ══════════════════════════════════ */
     .page-hero {
         background: linear-gradient(135deg, #6366f1 0%, #4f46e5 60%, #7c3aed 100%);
@@ -307,12 +307,12 @@
 <div class="page-hero">
     <div class="d-flex justify-content-between align-items-center">
         <div>
-            <h2><i class="bi bi-book-half me-2"></i>Daftar Buku</h2>
-            <p>Kelola koleksi buku perpustakaan digital Sembari &mdash;
-               <strong style="opacity:1;">{{ $totalAll }}</strong> buku tersedia</p>
+            <h2><i class="bi bi-book-half me-2"></i>Daftar Majalah</h2>
+            <p>Kelola koleksi majalah perpustakaan digital Serindit &mdash;
+               <strong style="opacity:1;">{{ $totalAll }}</strong> majalah tersedia</p>
         </div>
         <a href="{{ route('admin.books.create') }}" class="btn-add">
-            <i class="bi bi-plus-circle-fill"></i> Tambah Buku
+            <i class="bi bi-plus-circle-fill"></i> Tambah Majalah
         </a>
     </div>
 </div>
@@ -392,11 +392,11 @@
             <span style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#6366f1,#4f46e5);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:13px;">
                 <i class="bi bi-book-fill"></i>
             </span>
-            Koleksi Buku
+            Koleksi Majalah
         </h6>
         <div class="result-info">
             Menampilkan <strong>{{ $books->firstItem() ?? 0 }}–{{ $books->lastItem() ?? 0 }}</strong>
-            dari <strong>{{ $books->total() }}</strong> buku
+            dari <strong>{{ $books->total() }}</strong> majalah
             @if($search || $kategori || $lisensi)
                 &mdash; <span style="color:#6366f1;">filter aktif</span>
             @endif
@@ -409,7 +409,7 @@
             <thead>
                 <tr>
                     <th width="70">Cover</th>
-                    <th>Judul Buku</th>
+                    <th>Judul Majalah</th>
                     <th width="160">Lisensi</th>
                     <th width="130" class="text-center">Aksi</th>
                 </tr>
@@ -490,15 +490,15 @@
         <div class="empty-icon"><i class="bi bi-inbox"></i></div>
         @if($search || $kategori || $lisensi)
             <h5>Tidak Ada Hasil</h5>
-            <p>Tidak ada buku yang cocok dengan filter yang dipilih.</p>
+            <p>Tidak ada majalah yang cocok dengan filter yang dipilih.</p>
             <a href="{{ route('admin.books.index') }}" class="btn-add d-inline-flex" style="background:#6366f1;border-color:#6366f1;">
                 <i class="bi bi-x-circle"></i> Hapus Filter
             </a>
         @else
-            <h5>Belum Ada Buku</h5>
-            <p>Mulai tambahkan buku ke perpustakaan digital Sembari</p>
+            <h5>Belum Ada Majalah</h5>
+            <p>Mulai tambahkan majalah ke perpustakaan digital Serindit</p>
             <a href="{{ route('admin.books.create') }}" class="btn-add d-inline-flex" style="background:#6366f1;border-color:#6366f1;">
-                <i class="bi bi-plus-circle-fill"></i> Tambah Buku Pertama
+                <i class="bi bi-plus-circle-fill"></i> Tambah Majalah Pertama
             </a>
         @endif
     </div>
@@ -515,7 +515,7 @@
                 @method('DELETE')
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="bi bi-exclamation-triangle me-2" style="color:#ef4444"></i>Hapus Buku
+                        <i class="bi bi-exclamation-triangle me-2" style="color:#ef4444"></i>Hapus Majalah
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>

@@ -237,8 +237,8 @@
 <div class="page-hero">
     <div class="d-flex justify-content-between align-items-center">
         <div>
-            <h2><i class="bi bi-tags-fill me-2"></i>Kategori Buku</h2>
-            <p>Kelola kategori untuk mengorganisir koleksi buku digital</p>
+            <h2><i class="bi bi-tags-fill me-2"></i>Kategori Majalah</h2>
+            <p>Kelola kategori untuk mengorganisir koleksi Majalah digital</p>
         </div>
         <button class="btn-add" data-bs-toggle="modal" data-bs-target="#modalTambah">
             <i class="bi bi-plus-circle-fill"></i> Tambah Kategori
@@ -285,7 +285,7 @@
                     <th style="width:50px">#</th>
                     <th>Nama Kategori</th>
                     <th>Slug</th>
-                    <th>Jumlah Buku</th>
+                    <th>Jumlah Majalah</th>
                     <th style="width:110px">Aksi</th>
                 </tr>
             </thead>
@@ -326,7 +326,7 @@
                         <div class="empty-state">
                             <div class="empty-icon"><i class="bi bi-tags"></i></div>
                             <h5>Belum Ada Kategori</h5>
-                            <p>Tambahkan kategori pertama untuk mengorganisir koleksi buku.</p>
+                            <p>Tambahkan kategori pertama untuk mengorganisir koleksi majalah.</p>
                             <button class="btn-add" style="margin:0 auto;background:#10b981;border-color:transparent;"
                                     data-bs-toggle="modal" data-bs-target="#modalTambah">
                                 <i class="bi bi-plus-circle-fill"></i> Tambah Kategori
