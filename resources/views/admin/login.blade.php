@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Serindit</title>
-    
+    <title>Admin Login - Sembari</title>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <style>
         * {
             margin: 0;
@@ -62,8 +63,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(10deg); }
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+            }
         }
 
         /* Login Container */
@@ -90,6 +98,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -221,9 +230,19 @@
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
         }
 
         /* Footer */
@@ -284,10 +303,13 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="login-container">
@@ -295,7 +317,7 @@
             <!-- Logo Section -->
             <div class="logo-section">
                 <img src="{{ asset('img/logobalai.png') }}" alt="Logo Balai Bahasa">
-                <h1>Serindit Admin</h1>
+                <h1>Sembari Admin</h1>
                 <p>Perpustakaan Digital</p>
             </div>
 
@@ -316,15 +338,8 @@
                     <label for="login" class="form-label">Email atau Username</label>
                     <div class="input-wrapper">
                         <i class="bi bi-person-circle input-icon"></i>
-                        <input 
-                            type="text" 
-                            class="form-control" 
-                            id="login" 
-                            name="login" 
-                            value="{{ old('login') }}" 
-                            placeholder="Masukkan email atau username"
-                            required
-                            autofocus>
+                        <input type="text" class="form-control" id="login" name="login"
+                            value="{{ old('login') }}" placeholder="Masukkan email atau username" required autofocus>
                     </div>
                 </div>
 
@@ -333,13 +348,8 @@
                     <label for="password" class="form-label">Kata Sandi</label>
                     <div class="input-wrapper">
                         <i class="bi bi-lock-fill input-icon"></i>
-                        <input 
-                            type="password" 
-                            class="form-control" 
-                            id="password" 
-                            name="password" 
-                            placeholder="Masukkan kata sandi"
-                            required>
+                        <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Masukkan kata sandi" required>
                         <button type="button" class="password-toggle" onclick="togglePassword()">
                             <i class="bi bi-eye-fill" id="toggleIcon"></i>
                         </button>
@@ -365,7 +375,7 @@
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             const toggleIcon = document.getElementById('toggleIcon');
-            
+
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 toggleIcon.classList.remove('bi-eye-fill');
@@ -396,4 +406,5 @@
     </script>
 
 </body>
+
 </html>
