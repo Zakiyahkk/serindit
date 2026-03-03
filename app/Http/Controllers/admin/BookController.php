@@ -44,7 +44,8 @@ class BookController extends Controller
 
         // ── Filter lisensi ──
         if ($lisensi) {
-            $query->where('books.license', $lisensi);
+            $value = Str::contains($lisensi, 'Terbatas') ? 'Terbatas' : 'Umum';
+            $query->where('books.license', 'like', "%{$value}%");
         }
 
         // ── Sort ──
@@ -73,8 +74,9 @@ class BookController extends Controller
     {
         $categories = DB::table('categories')->orderBy('name')->get();
         $bookTypes = DB::table('book_types')->orderBy('name')->get();
+        $readingLevels = DB::table('reading_levels')->orderBy('order')->get();
 
-        return view('admin.books.create', compact('categories', 'bookTypes'));
+        return view('admin.books.create', compact('categories', 'bookTypes', 'readingLevels'));
     }
 
     /**
@@ -86,8 +88,9 @@ class BookController extends Controller
             'title' => 'required|max:255',
             'description' => 'nullable',
             'contributors' => 'nullable',
-            'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum',
+            'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum,Majalah Edisi Terbatas,Majalah Edisi Umum',
             'tahun_terbit' => 'nullable|integer|min:1900|max:' . date('Y'),
+            'reading_level_id' => 'nullable|exists:reading_levels,id',
             'cover_image' => 'nullable|image|max:2048',
             'pdf_file' => 'nullable|mimes:pdf|max:51200', // Max 50MB
             'categories' => 'nullable|array',
@@ -99,6 +102,7 @@ class BookController extends Controller
             'pdf_file.max' => 'Ukuran file PDF maksimal 50MB.',
             'pdf_file.mimes' => 'File harus berupa format PDF.',
         ]);
+
 
         $slug = Str::slug($request->title);
 
@@ -122,6 +126,7 @@ class BookController extends Controller
             'contributors' => $request->contributors,
             'license' => $request->license,
             'tahun_terbit' => $request->tahun_terbit ?: null,
+            'reading_level_id' => $request->reading_level_id ?: null,
             'pdf_file' => $pdfFilePath,
             'cover_image' => $coverImagePath,
             'created_at' => now(),
@@ -211,6 +216,7 @@ class BookController extends Controller
 
         $categories = DB::table('categories')->orderBy('name')->get();
         $bookTypes = DB::table('book_types')->orderBy('name')->get();
+        $readingLevels = DB::table('reading_levels')->orderBy('order')->get();
 
         // Get selected categories
         $selectedCategories = DB::table('book_categories')
@@ -228,6 +234,7 @@ class BookController extends Controller
             'book',
             'categories',
             'bookTypes',
+            'readingLevels',
             'selectedCategories',
             'selectedBookTypes'
         ));
@@ -242,8 +249,9 @@ class BookController extends Controller
             'title' => 'required|max:255',
             'description' => 'nullable',
             'contributors' => 'nullable',
-            'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum',
+            'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum,Majalah Edisi Terbatas,Majalah Edisi Umum',
             'tahun_terbit' => 'nullable|integer|min:1900|max:' . date('Y'),
+            'reading_level_id' => 'nullable|exists:reading_levels,id',
             'cover_image' => 'nullable|image|max:2048',
             'pdf_file' => 'nullable|mimes:pdf|max:51200', // Max 50MB
             'categories' => 'nullable|array',
@@ -255,6 +263,7 @@ class BookController extends Controller
             'pdf_file.max' => 'Ukuran file PDF maksimal 50MB.',
             'pdf_file.mimes' => 'File harus berupa format PDF.',
         ]);
+
 
         $slug = Str::slug($request->title);
 
@@ -294,6 +303,7 @@ class BookController extends Controller
             'contributors' => $request->contributors,
             'license' => $request->license,
             'tahun_terbit' => $request->tahun_terbit ?: null,
+            'reading_level_id' => $request->reading_level_id ?: null,
             'pdf_file' => $pdfFilePath,
             'cover_image' => $coverImagePath,
             'updated_at' => now(),

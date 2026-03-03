@@ -597,12 +597,12 @@
                 class="pill {{ !$lisensi ? 'active-all' : '' }}">
                 <i class="bi bi-grid me-1"></i> Semua
             </a>
-            <a href="{{ route('admin.books.index', array_merge(request()->except(['lisensi', 'page']), ['lisensi' => 'Buku Edisi Umum', 'search' => $search, 'kategori' => $kategori, 'sort' => $sort])) }}"
-                class="pill {{ $lisensi === 'Buku Edisi Umum' ? 'active-umum' : '' }}">
+            <a href="{{ route('admin.books.index', array_merge(request()->except(['lisensi', 'page']), ['lisensi' => 'Umum', 'search' => $search, 'kategori' => $kategori, 'sort' => $sort])) }}"
+                class="pill {{ Str::contains($lisensi, 'Umum') ? 'active-umum' : '' }}">
                 <i class="bi bi-globe me-1"></i> Edisi Umum
             </a>
-            <a href="{{ route('admin.books.index', array_merge(request()->except(['lisensi', 'page']), ['lisensi' => 'Buku Edisi Terbatas', 'search' => $search, 'kategori' => $kategori, 'sort' => $sort])) }}"
-                class="pill {{ $lisensi === 'Buku Edisi Terbatas' ? 'active-tbts' : '' }}">
+            <a href="{{ route('admin.books.index', array_merge(request()->except(['lisensi', 'page']), ['lisensi' => 'Terbatas', 'search' => $search, 'kategori' => $kategori, 'sort' => $sort])) }}"
+                class="pill {{ Str::contains($lisensi, 'Terbatas') ? 'active-tbts' : '' }}">
                 <i class="bi bi-lock-fill me-1"></i> Edisi Terbatas
             </a>
         </div>
@@ -665,11 +665,11 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($book->license == 'Buku Edisi Terbatas')
+                                    @if (Str::contains($book->license, 'Terbatas'))
                                         <span class="badge-terbatas">
                                             <i class="bi bi-lock-fill me-1"></i>Edisi Terbatas
                                         </span>
-                                    @elseif($book->license == 'Buku Edisi Umum')
+                                    @elseif(Str::contains($book->license, 'Umum'))
                                         <span class="badge-umum">
                                             <i class="bi bi-globe me-1"></i>Edisi Umum
                                         </span>

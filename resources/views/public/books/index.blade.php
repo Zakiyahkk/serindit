@@ -436,9 +436,10 @@
                                     </div>
                                 @endif
 
-                                @if($book->license === 'Buku Edisi Terbatas')
+                                @if(Str::contains($book->license, 'Terbatas'))
                                     <div class="absolute top-3 left-3 bg-red-500 text-white text-[9px] font-black px-2.5 py-1 rounded-lg z-10 shadow-lg">⭐ TERBATAS</div>
                                 @endif
+
 
                                 <div class="bk-overlay opacity-0 group-hover:opacity-100 transition-opacity">
                                     <div class="w-full bg-brand-yellow text-white text-xs font-black py-2.5 rounded-xl text-center translate-y-4 group-hover:translate-y-0 transition-transform">

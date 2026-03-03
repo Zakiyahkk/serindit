@@ -284,9 +284,9 @@
                 <div class="detail-row">
                     <span class="detail-label">Lisensi</span>
                     <span class="detail-value">
-                        @if($book->license == 'Buku Edisi Terbatas')
+                        @if(Str::contains($book->license, 'Terbatas'))
                             <span class="badge-terbatas"><i class="bi bi-lock-fill"></i>Edisi Terbatas</span>
-                        @elseif($book->license == 'Buku Edisi Umum')
+                        @elseif(Str::contains($book->license, 'Umum'))
                             <span class="badge-umum"><i class="bi bi-globe"></i>Edisi Umum</span>
                         @else
                             <span style="color:#94a3b8;">—</span>
@@ -306,6 +306,19 @@
                     </span>
                 </div>
 
+                <div class="detail-row">
+                    <span class="detail-label">Tingkat Pembaca</span>
+                    <span class="detail-value">
+                        @php
+                            $level = DB::table('reading_levels')->where('id', $book->reading_level_id)->first();
+                        @endphp
+                        @if($level)
+                            <span class="tag tag-level">{{ $level->name ?? $level->label }}</span>
+                        @else
+                            <span style="color:#94a3b8;">—</span>
+                        @endif
+                    </span>
+                </div>
                 <div class="detail-row">
                     <span class="detail-label">Ditambahkan</span>
                     <span class="detail-value">{{ \Carbon\Carbon::parse($book->created_at)->format('d M Y, H:i') }}</span>

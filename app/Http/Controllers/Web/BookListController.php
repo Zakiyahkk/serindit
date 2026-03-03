@@ -25,14 +25,10 @@ class BookListController extends Controller
 
         // ── Filter Lisensi ──
         if ($lisensi = $request->get('lisensi')) {
-            $map = [
-                'terbatas' => 'Buku Edisi Terbatas',
-                'umum'     => 'Buku Edisi Umum',
-            ];
-            if (isset($map[$lisensi])) {
-                $query->where('license', $map[$lisensi]);
-            }
+            $value = $lisensi === 'terbatas' ? 'Edisi Terbatas' : 'Edisi Umum';
+            $query->where('license', 'like', "%{$value}%");
         }
+
 
         // ── Filter Kategori ──
         if ($kategori = $request->get('kategori')) {
