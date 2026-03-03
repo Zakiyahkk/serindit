@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Sembari — Perpustakaan Digital BBPR')</title>
-    <meta name="description" content="@yield('description', 'Sembari adalah platform membaca buku digital gratis dari Balai Bahasa Provinsi Riau. Ribuan buku cerita untuk anak tersedia di sini!')">
+    <title>@yield('title', 'Serindit — Perpustakaan Digital Balai Bahasa Provinsi Riau')</title>
+    <meta name="description" content="@yield('description', 'Serindit adalah platform literasi digital dari Balai Bahasa Provinsi Riau. Ribuan buku berkualitas untuk semua kalangan, gratis dan mudah diakses.')">
 
     {{-- Tailwind CSS CDN --}}
     <script src="https://cdn.tailwindcss.com"></script>
@@ -13,7 +13,8 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        'round': ['"Nunito"', 'sans-serif'],
+                        'sans': ['"Inter"', 'sans-serif'],
+                        'serif': ['"Playfair Display"', 'serif'],
                     },
                     colors: {
                         brand: {
@@ -54,44 +55,44 @@
         }
     </script>
 
-    {{-- Google Fonts: Nunito & Bootstrap Icons --}}
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    {{-- Google Fonts: Inter + Playfair Display & Bootstrap Icons --}}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
     {{-- AOS Animation --}}
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        * { font-family: 'Nunito', sans-serif; }
+        * { font-family: 'Inter', sans-serif; }
+        .font-serif, h1.display, .heading-serif { font-family: 'Playfair Display', serif; }
 
         /* ── Scrollbar ── */
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #f0f4ff; }
-        ::-webkit-scrollbar-thumb { background: #1d83d1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #0766d2; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #08105f; }
 
         /* ── Hero Background ── */
         .hero-bg {
-            background-color: #FAFCFF;
+            background: linear-gradient(135deg, #f8faff 0%, #eef2ff 50%, #f0f7ff 100%);
             position: relative;
             overflow: hidden;
         }
-        /* Glow biru halus di pojok kanan atas */
         .hero-bg::before {
             content: '';
             position: absolute;
-            top: -80px; right: -80px;
-            width: 520px; height: 520px;
-            background: radial-gradient(circle, rgba(7,98,201,0.07) 0%, transparent 70%);
+            top: -120px; right: -120px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(7,102,210,0.06) 0%, transparent 65%);
             border-radius: 50%;
             pointer-events: none;
         }
-        /* Pola polka dot tipis */
         .hero-bg::after {
             content: '';
             position: absolute; inset: 0;
-            background-image: radial-gradient(circle, #7CB9E8 1px, transparent 1px);
-            background-size: 36px 36px;
-            opacity: 0.05;
+            background-image: radial-gradient(circle, rgba(7,102,210,0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.4;
             pointer-events: none;
         }
 
@@ -100,172 +101,158 @@
         .wave-divider svg { display: block; width: 100%; }
 
         /* ── Navbar Glow ── */
-        .navbar-glow { box-shadow: 0 4px 20px rgba(7,98,201,0.25); }
+        .navbar-glow {
+            box-shadow: 0 1px 0 rgba(255,255,255,0.05), 0 8px 32px rgba(8,16,95,0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
 
         /* ── Book Card ── */
-        .book-card { transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        .book-card:hover { transform: translateY(-10px) scale(1.02); }
+        .book-card { transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .book-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(7,102,210,0.12); }
 
         /* ── Star ── */
         .star { color: #F5A623; }
 
         /* ── Badge Pulse ── */
         @keyframes pulseBadge {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0.6); }
-            50%       { box-shadow: 0 0 0 8px rgba(245,166,35,0); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0.5); }
+            50%       { box-shadow: 0 0 0 10px rgba(245,166,35,0); }
         }
-        .badge-pulse { animation: pulseBadge 2s infinite; }
+        .badge-pulse { animation: pulseBadge 2.5s infinite; }
 
         /* ── Section Alt ── */
         .section-alt { background: linear-gradient(to bottom, #F0F7FF, #EEF6FF); }
 
         /* ── Category Pill ── */
-        .cat-pill { transition: all 0.2s; }
-        .cat-pill:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+        .cat-pill { transition: all 0.25s ease; }
+        .cat-pill:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.10); }
 
         /* ── Toast Notification ── */
         .toast-animate {
             animation: slide-in 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
         }
 
-        /* ── PRELOADER STYLES ── */
+        /* ── PRELOADER — Elegant ── */
         #preloader {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, #ffffff 0%, #F8FAFF 100%);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #08105f 0%, #0766d2 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 99999;
-            transition: opacity 0.4s ease, visibility 0.4s;
+            transition: opacity 0.5s ease, visibility 0.5s;
         }
 
-        /* Magic Book Animation */
-        .magic-book {
-            width: 100px;
-            height: 80px;
-            position: relative;
-            perspective: 1000px;
-        }
-
-        .book-spine {
-            width: 4px;
-            height: 100%;
-            background: #1E40AF;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-            z-index: 5;
-        }
-
-        .book-page {
-            width: 50%;
-            height: 100%;
-            background: white;
-            position: absolute;
-            right: 0;
-            transform-origin: left center;
-            border: 2px solid #1E40AF;
-            border-left: none;
-            border-radius: 0 10px 10px 0;
-            animation: flip-page 2.5s infinite ease-in-out;
-            box-shadow: 2px 2px 10px rgba(30, 64, 175, 0.1);
-        }
-
-        .book-page-fixed {
-            width: 50%;
-            height: 100%;
-            background: #EFF6FF;
-            position: absolute;
-            border: 2px solid #1E40AF;
-            z-index: 1;
-        }
-
-        .page-left { left: 0; border-radius: 10px 0 0 10px; border-right: none; }
-        .page-right { right: 0; border-radius: 0 10px 10px 0; border-left: none; }
-
-        @keyframes flip-page {
-            0% { transform: rotateY(0deg); z-index: 10; }
-            50% { transform: rotateY(-180deg); z-index: 10; }
-            100% { transform: rotateY(-180deg); z-index: 1; }
-        }
-
-        .magic-book .book-page:nth-child(2) { animation-delay: 0.5s; }
-        .magic-book .book-page:nth-child(3) { animation-delay: 1.0s; }
-        .magic-book .book-page:nth-child(4) { animation-delay: 1.5s; }
-
-        /* Sparkles */
-        .sparkles {
-            position: absolute;
-            width: 100%;
-            height: 100px;
-            pointer-events: none;
-        }
-
-        .sparkle {
-            position: absolute;
-            background: #F5A623;
-            width: 4px;
-            height: 4px;
+        .preloader-logo-ring {
+            width: 80px; height: 80px;
             border-radius: 50%;
-            animation: sparkle-float 2s infinite;
+            border: 2px solid rgba(255,255,255,0.15);
+            border-top-color: #F5A623;
+            animation: spin-ring 1.2s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .preloader-logo-ring-inner {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-bottom-color: rgba(255,255,255,0.6);
+            animation: spin-ring 1.8s linear infinite reverse;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .preloader-icon {
+            color: #ffffff;
+            font-size: 22px;
+            opacity: 0.9;
         }
 
-        @keyframes sparkle-float {
-            0% { transform: translateY(0) scale(0); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-60px) scale(1); opacity: 0; }
+        @keyframes spin-ring {
+            to { transform: rotate(360deg); }
         }
 
-        .loading-text {
-            margin-top: 40px;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 900;
-            color: #1E40AF;
+        .preloader-brand {
+            margin-top: 28px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 22px;
+            letter-spacing: 0.06em;
+            opacity: 0.95;
+        }
+        .preloader-sub {
+            margin-top: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 13px;
+            letter-spacing: 0.25em;
         }
+        .preloader-dots {
+            display: flex; gap: 6px; margin-top: 20px;
+        }
+        .preloader-dots span {
+            width: 5px; height: 5px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            animation: dot-pulse 1.4s ease-in-out infinite;
+        }
+        .preloader-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .preloader-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes dot-pulse {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.4; }
+            40% { transform: scale(1.2); opacity: 1; }
+        }
+        .preloader-hidden { opacity: 0; visibility: hidden; }
 
-        .preloader-hidden {
-            opacity: 0;
-            visibility: hidden;
+        /* ── Section Heading Style ── */
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            padding: 6px 16px;
+            border-radius: 999px;
+            margin-bottom: 14px;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #08105f;
+            line-height: 1.25;
+        }
+        .section-divider {
+            width: 48px; height: 3px;
+            background: linear-gradient(90deg, #0766d2, #F5A623);
+            border-radius: 2px;
+            margin: 14px auto 0;
         }
     </style>
 
     @yield('styles')
 </head>
 <body class="bg-white text-gray-800">
-    {{-- ══ PRELOADER (MAGIC BOOK) ══ --}}
+    {{-- ══ PRELOADER — Elegant ══ --}}
     <div id="preloader">
-        <div class="relative">
-            <div class="magic-book">
-                <div class="book-spine"></div>
-                <div class="book-page-fixed page-left"></div>
-                <div class="book-page-fixed page-right"></div>
-                <div class="book-page"></div>
-                <div class="book-page"></div>
-                <div class="book-page"></div>
-            </div>
-            {{-- Sparkle elements --}}
-            <div class="sparkles">
-                <div class="sparkle" style="left: 20%; animation-delay: 0.2s;"></div>
-                <div class="sparkle" style="left: 50%; animation-delay: 0.5s;"></div>
-                <div class="sparkle" style="left: 80%; animation-delay: 0.8s;"></div>
+        <div class="preloader-logo-ring">
+            <div class="preloader-logo-ring-inner">
+                <i class="bi bi-book preloader-icon"></i>
             </div>
         </div>
-        <div class="loading-text flex items-center gap-2">
-            <span>Sebentar ya...</span>
-            <span class="flex gap-1">
-                <span class="w-1.5 h-1.5 bg-brand-yellow rounded-full animate-bounce"></span>
-                <span class="w-1.5 h-1.5 bg-brand-yellow rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
-                <span class="w-1.5 h-1.5 bg-brand-yellow rounded-full animate-bounce" style="animation-delay: 0.4s"></span>
-            </span>
+        <div class="preloader-brand">Serindit</div>
+        <div class="preloader-sub">Balai Bahasa Provinsi Riau</div>
+        <div class="preloader-dots">
+            <span></span><span></span><span></span>
         </div>
     </div>
 

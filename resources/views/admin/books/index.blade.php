@@ -308,7 +308,7 @@
     <div class="d-flex justify-content-between align-items-center">
         <div>
             <h2><i class="bi bi-book-half me-2"></i>Daftar Buku</h2>
-            <p>Kelola koleksi buku perpustakaan digital Sembari &mdash;
+            <p>Kelola koleksi buku perpustakaan digital Serindit &mdash;
                <strong style="opacity:1;">{{ $totalAll }}</strong> buku tersedia</p>
         </div>
         <a href="{{ route('admin.books.create') }}" class="btn-add">
@@ -496,7 +496,7 @@
             </a>
         @else
             <h5>Belum Ada Buku</h5>
-            <p>Mulai tambahkan buku ke perpustakaan digital Sembari</p>
+            <p>Mulai tambahkan buku ke perpustakaan digital Serindit</p>
             <a href="{{ route('admin.books.create') }}" class="btn-add d-inline-flex" style="background:#6366f1;border-color:#6366f1;">
                 <i class="bi bi-plus-circle-fill"></i> Tambah Buku Pertama
             </a>

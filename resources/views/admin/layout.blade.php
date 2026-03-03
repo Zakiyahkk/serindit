@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Sembari — @yield('title', 'Dashboard')</title>
+    <title>Admin Serindit — @yield('title', 'Dashboard')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- Bootstrap CSS --}}
@@ -119,7 +119,7 @@
                  class="brand-logo"
                  onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg'">
             <div class="brand-text">
-                <h5>Sembari</h5>
+                <h5>Serindit</h5>
                 <small>Perpustakaan Digital</small>
             </div>
         </div>
@@ -162,14 +162,6 @@
                        class="nav-link {{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
                         <i class="bi bi-tags"></i>
                         <span>Kategori</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('admin.reading-levels.index') }}"
-                       class="nav-link {{ request()->routeIs('admin.reading-levels*') ? 'active' : '' }}">
-                        <i class="bi bi-bar-chart-steps"></i>
-                        <span>Jenjang Baca</span>
                     </a>
                 </li>
 

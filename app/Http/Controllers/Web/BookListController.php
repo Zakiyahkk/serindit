@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Category;
-use App\Models\ReadingLevel;
 use App\Models\BookType;
 
 class BookListController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Book::with(['readingLevel', 'stat', 'categories', 'bookTypes']);
+        $query = Book::with(['stat', 'categories', 'bookTypes']);
 
         // ── Search ──
         if ($search = $request->get('q')) {
@@ -33,11 +32,6 @@ class BookListController extends Controller
             if (isset($map[$lisensi])) {
                 $query->where('license', $map[$lisensi]);
             }
-        }
-
-        // ── Filter Jenjang ──
-        if ($jenjang = $request->get('jenjang')) {
-            $query->where('reading_level_id', $jenjang);
         }
 
         // ── Filter Kategori ──
@@ -69,7 +63,6 @@ class BookListController extends Controller
         $books         = $query->paginate(20)->withQueryString();
         $totalBuku     = Book::count();
         $allKategori   = Category::withCount('books')->orderBy('name')->get();
-        $allJenjang    = ReadingLevel::orderBy('order')->get();
         $allJenis      = BookType::orderBy('name')->get();
         $tahunList     = Book::whereNotNull('tahun_terbit')
                             ->distinct()
@@ -78,15 +71,15 @@ class BookListController extends Controller
 
         return view('public.books.index', compact(
             'books', 'totalBuku',
-            'allKategori', 'allJenjang', 'allJenis', 'tahunList',
-            'search', 'lisensi', 'jenjang', 'kategori', 'jenis', 'tahun', 'sort'
+            'allKategori', 'allJenis', 'tahunList',
+            'search', 'lisensi', 'kategori', 'jenis', 'tahun', 'sort'
         ));
     }
 
     public function show($id)
     {
         // Cari buku berdasarkan slug atau ID
-        $book = Book::with(['readingLevel', 'stat', 'categories', 'bookTypes'])
+        $book = Book::with(['stat', 'categories', 'bookTypes'])
             ->where('id', $id)
             ->orWhere('slug', $id)
             ->firstOrFail();

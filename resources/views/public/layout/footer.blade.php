@@ -1,6 +1,6 @@
 {{-- ═══════════════════════════════════════════
-    FOOTER — Sembari (Premium Melayu Design)
-══════════════════════════════════════════════ --}}
+    FOOTER — Serindit
+════════════════════════════════════════════ --}}
 <footer class="relative bg-brand-navy text-white overflow-hidden">
     {{-- Gradient Overlay --}}
     <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/50 via-transparent to-black/30 pointer-events-none"></div>
@@ -22,9 +22,9 @@
                              class="h-16 w-auto object-contain"
                              style="filter: drop-shadow(0 4px 12px rgba(255,255,255,0.2));">
                     </div>
-                    <p class="text-blue-100/70 text-sm leading-relaxed font-semibold max-w-sm">
-                        Platform literasi digital unggulan dari <strong class="text-white">Balai Bahasa Provinsi Riau</strong>. 
-                        Hadir untuk mewujudkan generasi emas Indonesia yang berwawasan luas melalui budaya membaca.
+                    <p class="text-blue-100/70 text-sm leading-relaxed font-medium max-w-sm">
+                        Platform literasi digital dari <strong class="text-white">Balai Bahasa Provinsi Riau</strong>. 
+                        Menghadirkan ribuan karya sastra dan buku berkualitas untuk semua kalangan — mendorong budaya baca di seluruh Indonesia.
                     </p>
                 </div>
                 
@@ -108,13 +108,13 @@
         {{-- Copyright Bar --}}
         <div class="bg-black/10 backdrop-blur-md py-6 border-t border-white/5">
             <div class="max-w-6xl mx-auto px-8 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-4 relative z-20">
-                <p class="text-[11px] text-white/40 font-black uppercase tracking-widest text-center md:text-left">
-                    &copy; {{ date('Y') }} Sembari — Balai Bahasa Provinsi Riau. Dikembangkan oleh Tim IT.
+                <p class="text-[11px] text-white/40 font-semibold uppercase tracking-widest text-center md:text-left">
+                    &copy; {{ date('Y') }} Serindit &mdash; Balai Bahasa Provinsi Riau. Dikembangkan oleh Tim IT.
                 </p>
                 <div class="flex items-center gap-2">
                     <span class="w-2 h-2 bg-brand-yellow rounded-full animate-pulse"></span>
-                    <p class="text-[10px] text-white/50 font-black uppercase tracking-widest">
-                        Literasi untuk Indonesia Maju
+                    <p class="text-[10px] text-white/50 font-semibold uppercase tracking-widest">
+                        Literasi untuk Semua Generasi
                     </p>
                 </div>
             </div>

@@ -7,14 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Book;
 use App\Models\Category;
-use App\Models\ReadingLevel;
 
 class HomeController extends Controller
 {
     public function index()
     {
         // 1. Buku Terbaru (4 terbaru)
-        $terbaru = Book::with(['readingLevel', 'stat'])
+        $terbaru = Book::with(['stat'])
             ->orderBy('created_at', 'desc')
             ->take(4)
             ->get();
@@ -31,9 +30,6 @@ class HomeController extends Controller
             ->take(4)
             ->get();
 
-        // 4. Jenjang Pembaca
-        $jenjang = ReadingLevel::orderBy('order')->get();
-
         // 5. Kategori beserta jumlah buku
         $kategori = Category::withCount('books')->get();
 
@@ -48,7 +44,6 @@ class HomeController extends Controller
             'terbaru',
             'terpopuler',
             'terbatas',
-            'jenjang',
             'kategori',
             'stats'
         ));

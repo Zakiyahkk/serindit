@@ -443,7 +443,7 @@
                     </div>
 
                     {{-- Tahun Terbit --}}
-                    <div class="mb-4">
+                    <div class="mb-0">
                         <label class="form-label">
                             Tahun Terbit
                             <span class="text-muted fw-normal">(Opsional)</span>
@@ -462,23 +462,6 @@
                         <small class="text-muted mt-1 d-block">
                             <i class="bi bi-info-circle me-1"></i>Tahun buku diterbitkan (1900–{{ date('Y') }})
                         </small>
-                    </div>
-
-                    <!-- Tingkat Pembaca -->
-                    <div class="mb-0">
-                        <label class="form-label">Tingkat Pembaca <span class="text-muted fw-normal">(Opsional)</span></label>
-                        <select class="form-select @error('reading_level_id') is-invalid @enderror"
-                                name="reading_level_id">
-                            <option value="">— Pilih tingkat pembaca —</option>
-                            @foreach($readingLevels as $level)
-                                <option value="{{ $level->id }}" {{ old('reading_level_id') == $level->id ? 'selected' : '' }}>
-                                    {{ $level->name ?? $level->label }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('reading_level_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
                 </div>
             </div>

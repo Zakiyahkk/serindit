@@ -1,6 +1,6 @@
 @extends('public.layout.app')
 
-@section('title', 'Koleksi Buku — Sembari')
+@section('title', 'Koleksi Buku — Serindit')
 @section('description', 'Jelajahi ribuan buku digital gratis untuk anak-anak Indonesia. Filter berdasarkan jenjang, kategori, dan lisensi.')
 
 @section('styles')
@@ -300,7 +300,7 @@
             <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 4h18M7 8h10M11 12h2M11 16h2"/></svg>
             Filter Koleksi
             @php
-                $activeCount = collect([request('lisensi'), request('jenjang'), request('kategori'), request('jenis'), request('tahun'), request('q')])->filter()->count();
+                $activeCount = collect([request('lisensi'), request('kategori'), request('jenis'), request('tahun'), request('q')])->filter()->count();
             @endphp
             @if($activeCount > 0)
             <span class="bg-red-500 text-white rounded-full w-5 h-5 text-[10px] flex items-center justify-center">{{ $activeCount }}</span>
@@ -353,22 +353,6 @@
                         </div>
                     </div>
 
-                    <div class="fdivider"></div>
-
-                    {{-- JENJANG --}}
-                    <div class="fgroup">
-                        <div class="fgroup-label">🎯 <span>Jenjang Pembaca</span></div>
-                        <div class="fselect-wrap">
-                            <select name="jenjang" class="fselect" onchange="this.form.submit()">
-                                <option value="">Semua Jenjang</option>
-                                @foreach($allJenjang as $j)
-                                    <option value="{{ $j->id }}" {{ ($jenjang ?? '') == $j->id ? 'selected' : '' }}>{{ $j->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="fdivider"></div>
 
                     {{-- KATEGORI --}}
                     <div class="fgroup">
@@ -422,7 +406,6 @@
                             <div class="flex flex-wrap gap-2">
                                 @if(!empty($search)) <div class="filter-chip">🔍 "{{ $search }}"</div> @endif
                                 @if(!empty($lisensi)) <div class="filter-chip">⭐ {{ ucfirst($lisensi) }}</div> @endif
-                                @if(!empty($jenjang)) <div class="filter-chip">🎯 Jenjang: {{ $allJenjang->firstWhere('id', $jenjang)->name ?? '' }}</div> @endif
                             </div>
                         @endif
                     </div>

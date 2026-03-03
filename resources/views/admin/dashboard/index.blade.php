@@ -275,7 +275,7 @@
 <div class="dash-hero">
     <i class="bi bi-book-half hero-icon"></i>
     <h2>{{ $greeting }}, {{ session('admin_username', 'Admin') }}! 👋</h2>
-    <p>Selamat datang di Panel Admin Perpustakaan Digital Sembari</p>
+    <p>Selamat datang di Panel Admin Perpustakaan Digital Serindit</p>
     <div class="hero-date">
         <i class="bi bi-calendar3 me-1"></i>
         {{ $now->translatedFormat('l, d F Y') }}

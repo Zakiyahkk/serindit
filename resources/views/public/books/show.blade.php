@@ -1,6 +1,6 @@
 @extends('public.layout.app')
 
-@section('title', ($book->title ?? 'Detail Buku') . ' — Sembari')
+@section('title', ($book->title ?? 'Detail Buku') . ' — Serindit')
 
 @section('content')
 @php

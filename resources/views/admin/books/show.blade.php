@@ -305,21 +305,7 @@
                         @endif
                     </span>
                 </div>
-                <div class="detail-row">
-                    <span class="detail-label">Tingkat Pembaca</span>
-                    <span class="detail-value">
-                        @php
-                            $level = $book->reading_level_id
-                                ? DB::table('reading_levels')->find($book->reading_level_id)
-                                : null;
-                        @endphp
-                        @if($level)
-                            <span class="tag tag-level">{{ $level->name }}</span>
-                        @else
-                            <span style="color:#94a3b8;">—</span>
-                        @endif
-                    </span>
-                </div>
+
                 <div class="detail-row">
                     <span class="detail-label">Ditambahkan</span>
                     <span class="detail-value">{{ \Carbon\Carbon::parse($book->created_at)->format('d M Y, H:i') }}</span>

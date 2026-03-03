@@ -73,9 +73,8 @@ class BookController extends Controller
     {
         $categories = DB::table('categories')->orderBy('name')->get();
         $bookTypes = DB::table('book_types')->orderBy('name')->get();
-        $readingLevels = DB::table('reading_levels')->orderBy('order')->get();
 
-        return view('admin.books.create', compact('categories', 'bookTypes', 'readingLevels'));
+        return view('admin.books.create', compact('categories', 'bookTypes'));
     }
 
     /**
@@ -89,7 +88,6 @@ class BookController extends Controller
             'contributors' => 'nullable',
             'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum',
             'tahun_terbit' => 'nullable|integer|min:1900|max:' . date('Y'),
-            'reading_level_id' => 'nullable|exists:reading_levels,id',
             'cover_image' => 'nullable|image|max:2048',
             'pdf_file' => 'nullable|mimes:pdf|max:51200', // Max 50MB
             'categories' => 'nullable|array',
@@ -124,7 +122,6 @@ class BookController extends Controller
             'contributors' => $request->contributors,
             'license' => $request->license,
             'tahun_terbit' => $request->tahun_terbit ?: null,
-            'reading_level_id' => $request->reading_level_id,
             'pdf_file' => $pdfFilePath,
             'cover_image' => $coverImagePath,
             'created_at' => now(),
@@ -214,7 +211,6 @@ class BookController extends Controller
 
         $categories = DB::table('categories')->orderBy('name')->get();
         $bookTypes = DB::table('book_types')->orderBy('name')->get();
-        $readingLevels = DB::table('reading_levels')->orderBy('order')->get();
 
         // Get selected categories
         $selectedCategories = DB::table('book_categories')
@@ -232,7 +228,6 @@ class BookController extends Controller
             'book',
             'categories',
             'bookTypes',
-            'readingLevels',
             'selectedCategories',
             'selectedBookTypes'
         ));
@@ -249,7 +244,6 @@ class BookController extends Controller
             'contributors' => 'nullable',
             'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum',
             'tahun_terbit' => 'nullable|integer|min:1900|max:' . date('Y'),
-            'reading_level_id' => 'nullable|exists:reading_levels,id',
             'cover_image' => 'nullable|image|max:2048',
             'pdf_file' => 'nullable|mimes:pdf|max:51200', // Max 50MB
             'categories' => 'nullable|array',
@@ -300,7 +294,6 @@ class BookController extends Controller
             'contributors' => $request->contributors,
             'license' => $request->license,
             'tahun_terbit' => $request->tahun_terbit ?: null,
-            'reading_level_id' => $request->reading_level_id,
             'pdf_file' => $pdfFilePath,
             'cover_image' => $coverImagePath,
             'updated_at' => now(),

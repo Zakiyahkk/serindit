@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Sembari</title>
+    <title>Admin Login - Serindit</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -295,7 +295,7 @@
             <!-- Logo Section -->
             <div class="logo-section">
                 <img src="{{ asset('img/logobalai.png') }}" alt="Logo Balai Bahasa">
-                <h1>Sembari Admin</h1>
+                <h1>Serindit Admin</h1>
                 <p>Perpustakaan Digital</p>
             </div>
 

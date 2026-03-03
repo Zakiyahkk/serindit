@@ -8,14 +8,19 @@
     <div class="max-w-6xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
 
         {{-- Logo Balai Bahasa --}}
-        <a href="{{ route('home') }}" class="flex items-center gap-3 flex-shrink-0">
+        <a href="{{ route('home') }}" class="flex items-center gap-3 flex-shrink-0 group">
             <img src="{{ asset('img/logo/logobalai.png') }}" alt="Logo Balai Bahasa Provinsi Riau"
                  class="h-12 w-auto object-contain"
                  style="max-height: 48px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35)) drop-shadow(0 0 12px rgba(255,255,255,0.25));"
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             {{-- Fallback teks jika gambar tidak ditemukan --}}
-            <div style="display:none" class="bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-xl flex items-center gap-2">
-                <span class="text-white font-black text-lg tracking-tight">SEMBARI</span>
+            <div style="display:none" class="flex items-center gap-2.5">
+                <div class="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center">
+                    <i class="bi bi-book text-white text-base"></i>
+                </div>
+                <div>
+                    <span class="text-white font-bold text-lg tracking-wide" style="font-family: 'Playfair Display', serif;">Serindit</span>
+                </div>
             </div>
         </a>
 
@@ -39,17 +44,17 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                Bantuan
+                Tentang
             </a>
         </div>
 
         {{-- Search Bar --}}
         <form action="{{ route('book.list') }}" method="GET" class="relative hidden lg:block">
-            <input type="text" name="q" placeholder="Cari buku seru..."
+            <input type="text" name="q" placeholder="Cari buku..."
                    value="{{ request('q') }}"
-                   class="pl-11 pr-4 py-2.5 rounded-full text-sm font-semibold text-gray-700
-                          bg-white/95 border-0 focus:ring-3 focus:ring-brand-yellow w-60
-                          shadow-inner transition focus:w-72">
+                   class="pl-11 pr-4 py-2.5 rounded-full text-sm font-medium text-gray-700
+                          bg-white/95 border-0 focus:ring-2 focus:ring-brand-yellow w-56
+                          shadow-inner transition-all duration-300 focus:w-72 outline-none">
             <button type="submit" class="absolute left-4 top-1/2 -translate-y-1/2">
                 <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
