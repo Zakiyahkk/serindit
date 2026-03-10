@@ -6,7 +6,7 @@
     <style>
         /* Dashboard page styles */
         .dash-hero {
-            background: linear-gradient(135deg, #63a3f1ff 0%, #4f46e5 50%, #eba818ff 100%);
+            background: linear-gradient(135deg, #a50024 0%, rgb(248, 248, 114) 70%, rgb(6, 176, 3) 100%);
             border-radius: 20px;
             padding: 32px 36px;
             color: #fff;
@@ -59,8 +59,8 @@
 
         .dash-hero p {
             font-size: 14px;
+            color: #fff;
             margin: 0;
-            opacity: 0.8;
             position: relative;
             z-index: 1;
         }
@@ -317,25 +317,25 @@
             display: block;
         }
 
-        .qa-purple {
-            background: #f5f3ff;
-            color: #4f46e5;
+        .qa-yellow {
+            background: #fffff3;
+            color: rgb(197, 197, 1);
             border-color: #e0e7ff;
         }
 
-        .qa-purple .qa-icon {
-            background: #e0e7ff;
-            color: #6366f1;
+        .qa-yellow .qa-icon {
+            background: #fffed5;
+            color: rgb(197, 197, 1)
         }
 
-        .qa-purple:hover {
-            background: #6366f1;
+        .qa-yellow:hover {
+            background: rgb(197, 197, 1);
             color: #fff;
-            border-color: #6366f1;
+            border-color: rgb(197, 197, 1)
         }
 
-        .qa-purple:hover .qa-icon {
-            background: rgba(255, 255, 255, 0.2);
+        .qa-yellow:hover .qa-icon {
+            background: rgba(250, 250, 240, 0.2);
             color: #fff;
         }
 
@@ -483,28 +483,6 @@
     <div class="row g-3 mb-4">
         <div class="col-6 col-lg-3">
             <div class="stat-card">
-                <div class="stat-icon" style="background:linear-gradient(135deg,#6366f1,#4f46e5);">
-                    <i class="bi bi-book-fill"></i>
-                </div>
-                <div class="stat-info">
-                    <p>Total Majalah</p>
-                    <h3 style="color:#6366f1;">{{ $totalBooks }}</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-lg-3">
-            <div class="stat-card">
-                <div class="stat-icon" style="background:linear-gradient(135deg,#10b981,#059669);">
-                    <i class="bi bi-tags-fill"></i>
-                </div>
-                <div class="stat-info">
-                    <p>Kategori</p>
-                    <h3 style="color:#10b981;">{{ $totalCategories }}</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-lg-3">
-            <div class="stat-card">
                 <div class="stat-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);">
                     <i class="bi bi-eye-fill"></i>
                 </div>
@@ -516,12 +494,34 @@
         </div>
         <div class="col-6 col-lg-3">
             <div class="stat-card">
-                <div class="stat-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626);">
-                    <i class="bi bi-heart-fill"></i>
+                <div class="stat-icon" style="background:linear-gradient(135deg,#d14563,#ce0632);">
+                    <i class="bi bi-book-fill"></i>
                 </div>
                 <div class="stat-info">
-                    <p>Total Disukai</p>
-                    <h3 style="color:#ef4444;">{{ number_format($totalLikes) }}</h3>
+                    <p>Total Majalah</p>
+                    <h3 style="color:#ce0632;">{{ $totalBooks }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="stat-icon" style="background:linear-gradient(135deg,rgb(255, 255, 55),rgb(197, 197, 1));">
+                    <i class="bi bi-pencil-square"></i>
+                </div>
+                <div class="stat-info">
+                    <p>Total Tulisan</p>
+                    <h3 style="color:rgb(197, 197, 1);">{{ $totalCategories }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-lg-3">
+            <div class="stat-card">
+                <div class="stat-icon" style="background:linear-gradient(135deg,rgb(6, 176, 3),rgb(30, 123, 28));">
+                    <i class="bi bi-file-earmark-richtext"></i>
+                </div>
+                <div class="stat-info">
+                    <p>Total Naskah</p>
+                    <h3 style="color:rgb(30, 123, 28);">{{ number_format($totalLikes) }}</h3>
                 </div>
             </div>
         </div>
@@ -535,7 +535,7 @@
             <div class="dash-card">
                 <div class="dash-card-header">
                     <h5>
-                        <span class="hdr-icon" style="background:linear-gradient(135deg,#6366f1,#4f46e5);">
+                        <span class="hdr-icon" style="background:linear-gradient(135deg,#f16363,#e54646);">
                             <i class="bi bi-clock-history"></i>
                         </span>
                         Majalah Terbaru
@@ -595,14 +595,14 @@
                     </h5>
                 </div>
                 <div style="padding:14px;">
-                    <a href="{{ route('admin.books.create') }}" class="qa-btn qa-purple">
+                    <a href="{{ route('admin.books.create') }}" class="qa-btn qa-green">
                         <div class="qa-icon"><i class="bi bi-plus-circle-fill"></i></div>
                         <div class="qa-text">
                             Tambah Majalah Baru
                             <small>Upload majalah</small>
                         </div>
                     </a>
-                    <a href="{{ route('admin.books.index') }}" class="qa-btn qa-green">
+                    <a href="{{ route('admin.books.index') }}" class="qa-btn qa-yellow">
                         <div class="qa-icon"><i class="bi bi-list-ul"></i></div>
                         <div class="qa-text">
                             Kelola Majalah

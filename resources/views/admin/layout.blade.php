@@ -131,12 +131,7 @@
 
             {{-- Brand --}}
             <div class="sidebar-brand">
-                <img src="{{ asset('img/logobalai.png') }}" alt="Logo Balai Bahasa" class="brand-logo"
-                    onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg'">
-                <div class="brand-text">
-                    <h5>Sembari</h5>
-                    <small>Perpustakaan Digital</small>
-                </div>
+                <img src="{{ asset('img/logo/Serindit.png') }}" alt="Logo Balai Bahasa" class="brand-logo">
             </div>
 
             {{-- Profile --}}
@@ -177,6 +172,22 @@
                             class="nav-link {{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
                             <i class="bi bi-tags"></i>
                             <span>Kategori</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.categories.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
+                            <i class="bi bi-pencil-square"></i>
+                            <span>Tulisan</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.categories.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
+                            <i class="bi bi-file-earmark-richtext"></i>
+                            <span>Naskah</span>
                         </a>
                     </li>
 
