@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Sembari</title>
+    <title>Admin Login - Serindit</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -30,7 +29,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #1c4d7bff 100%);
+            background: linear-gradient(135deg, #66ea80 0%, rgb(30, 123, 28) 100%);
             position: relative;
             overflow: hidden;
         }
@@ -54,7 +53,7 @@
             position: absolute;
             width: 400px;
             height: 400px;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #fe4f4f 0%, #fe0000 100%);
             border-radius: 50%;
             bottom: -200px;
             left: -200px;
@@ -63,15 +62,8 @@
         }
 
         @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-
-            50% {
-                transform: translateY(-30px) rotate(10deg);
-            }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
         }
 
         /* Login Container */
@@ -87,7 +79,7 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 24px;
-            padding: 48px 40px;
+            padding: 20px 30px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.2);
             animation: slideUp 0.6s ease-out;
@@ -98,7 +90,6 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -108,11 +99,11 @@
         /* Logo Section */
         .logo-section {
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 20px;
         }
 
         .logo-section img {
-            width: 100px;
+            width: 180px;
             height: auto;
             margin-bottom: 16px;
             animation: fadeIn 0.8s ease-out;
@@ -170,7 +161,7 @@
         }
 
         .form-control:focus {
-            border-color: #667eea;
+            border-color: #e1ea66;
             box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
             outline: none;
         }
@@ -197,7 +188,7 @@
         .btn-login {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ea0303 0%, #f2e857 100%);
             border: none;
             border-radius: 12px;
             color: #ffffff;
@@ -230,19 +221,9 @@
         }
 
         @keyframes shake {
-
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-
-            25% {
-                transform: translateX(-10px);
-            }
-
-            75% {
-                transform: translateX(10px);
-            }
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
         }
 
         /* Footer */
@@ -303,22 +284,18 @@
         }
 
         @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
-
 <body>
 
     <div class="login-container">
         <div class="login-card">
             <!-- Logo Section -->
             <div class="logo-section">
-                <img src="{{ asset('img/logobalai.png') }}" alt="Logo Balai Bahasa">
-                <h1>Sembari Admin</h1>
-                <p>Perpustakaan Digital</p>
+                <img src="{{ asset('img/logo/Serindit.png') }}" alt="Logo Balai Bahasa">
+                <p>Silakan masuk ke laman admin Serindit menggunakan email dan kata sandi Anda</p>
             </div>
 
             <!-- Error Message -->
@@ -338,8 +315,15 @@
                     <label for="login" class="form-label">Email atau Username</label>
                     <div class="input-wrapper">
                         <i class="bi bi-person-circle input-icon"></i>
-                        <input type="text" class="form-control" id="login" name="login"
-                            value="{{ old('login') }}" placeholder="Masukkan email atau username" required autofocus>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="login"
+                            name="login"
+                            value="{{ old('login') }}"
+                            placeholder="Masukkan email atau username"
+                            required
+                            autofocus>
                     </div>
                 </div>
 
@@ -348,8 +332,13 @@
                     <label for="password" class="form-label">Kata Sandi</label>
                     <div class="input-wrapper">
                         <i class="bi bi-lock-fill input-icon"></i>
-                        <input type="password" class="form-control" id="password" name="password"
-                            placeholder="Masukkan kata sandi" required>
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            placeholder="Masukkan kata sandi"
+                            required>
                         <button type="button" class="password-toggle" onclick="togglePassword()">
                             <i class="bi bi-eye-fill" id="toggleIcon"></i>
                         </button>
@@ -358,8 +347,7 @@
 
                 <!-- Submit Button -->
                 <button type="submit" class="btn-login" id="loginBtn">
-                    <i class="bi bi-box-arrow-in-right me-2"></i>
-                    Masuk ke Dashboard
+                    Masuk
                 </button>
             </form>
 
@@ -406,5 +394,4 @@
     </script>
 
 </body>
-
 </html>
