@@ -616,6 +616,42 @@
             </div>
         </div>
 
+        <!-- SECTION: Daftar Isi (FULL WIDTH) -->
+        <div class="col-12">
+            <div class="form-section">
+                <div class="form-section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg,#8b5cf6,#7c3aed);">
+                        <i class="bi bi-list-ol"></i>
+                    </div>
+                    <div>
+                        <h6>Daftar Isi Majalah</h6>
+                        <p>Navigasi interaktif untuk Flipbook Reader</p>
+                    </div>
+                </div>
+                <div class="form-section-body">
+                    <input type="hidden" name="table_of_contents" id="toc_hidden_input" value="[]">
+                    
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-sm mb-3">
+                            <thead style="background: #f8fafc;">
+                                <tr>
+                                    <th width="60%" class="text-muted" style="font-size:12px; font-weight:600;">Judul Bab / Bagian</th>
+                                    <th width="30%" class="text-muted" style="font-size:12px; font-weight:600;">Halaman</th>
+                                    <th width="10%" class="text-center text-muted" style="font-size:12px; font-weight:600;">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="toc_tbody">
+                                <!-- dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-light border" onclick="addTocRow()">
+                        <i class="bi bi-plus-circle me-1"></i> Tambah Baris
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- SECTION: Jenis & Kategori (FULL WIDTH) -->
         <div class="col-12">
             <div class="form-section">
@@ -725,6 +761,51 @@ function removePdf() {
     document.getElementById('pdfPreviewBox').style.display = 'none';
     document.getElementById('pdfUploadArea').style.display = 'flex';
 }
+
+// Table of contents logic
+let tocItems = {!! $book->table_of_contents ?: '[]' !!};
+
+if (!Array.isArray(tocItems)) {
+    tocItems = [];
+}
+
+function renderToc() {
+    const tbody = document.getElementById('toc_tbody');
+    tbody.innerHTML = '';
+    
+    if (tocItems.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" class="text-center text-muted py-3" style="font-size:13px">Belum ada daftar isi ditambahkan</td></tr>`;
+    } else {
+        tocItems.forEach((item, index) => {
+            tbody.innerHTML += `
+                <tr>
+                    <td><input type="text" class="form-control form-control-sm" value="${item.title}" oninput="updateTocRow(${index}, 'title', this.value)" placeholder="Contoh: Kata Pengantar"></td>
+                    <td><input type="number" class="form-control form-control-sm" value="${item.page}" oninput="updateTocRow(${index}, 'page', this.value)" placeholder="1"></td>
+                    <td class="text-center"><button type="button" class="btn btn-sm btn-light text-danger" onclick="removeTocRow(${index})"><i class="bi bi-trash"></i></button></td>
+                </tr>
+            `;
+        });
+    }
+    document.getElementById('toc_hidden_input').value = JSON.stringify(tocItems);
+}
+
+function addTocRow() {
+    tocItems.push({ title: '', page: '' });
+    renderToc();
+}
+
+function updateTocRow(index, field, value) {
+    tocItems[index][field] = value;
+    document.getElementById('toc_hidden_input').value = JSON.stringify(tocItems);
+}
+
+function removeTocRow(index) {
+    tocItems.splice(index, 1);
+    renderToc();
+}
+
+document.addEventListener('DOMContentLoaded', () => { renderToc(); });
+
 </script>
 
 @endsection

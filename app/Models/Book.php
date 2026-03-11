@@ -18,6 +18,7 @@ class Book extends Model
         'reading_level_id',
         'cover_image',
         'pdf_file',
+        'table_of_contents',
     ];
 
     /**

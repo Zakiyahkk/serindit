@@ -129,6 +129,7 @@ class BookController extends Controller
             'reading_level_id' => $request->reading_level_id ?: null,
             'pdf_file' => $pdfFilePath,
             'cover_image' => $coverImagePath,
+            'table_of_contents' => $request->table_of_contents,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -306,6 +307,7 @@ class BookController extends Controller
             'reading_level_id' => $request->reading_level_id ?: null,
             'pdf_file' => $pdfFilePath,
             'cover_image' => $coverImagePath,
+            'table_of_contents' => $request->table_of_contents,
             'updated_at' => now(),
         ]);
 

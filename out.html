@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serindit — Perpustakaan Digital Balai Bahasa Provinsi Riau</title>
+    <meta name="description" content="Serindit adalah platform membaca buku digital gratis dari Balai Bahasa Provinsi Riau. Ribuan buku tersedia untuk semua kalangan!">
+
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['"Inter"', 'sans-serif'],
+                        'serif': ['"Playfair Display"', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue:   '#0766d2ff',
+                            sky:    '#1d83d1',
+                            green:  '#27AE60',
+                            yellow: '#F5A623',
+                            yellow2: '#ffd500ff',
+                            orange: '#E8621E',
+                            purple: '#7C3AED',
+                            pink:   '#E91E8C',
+                            navy: '#08105fff',
+                            darkblue: '#2838c3ff',
+                            gray: '#94A3B8',
+                            white: '#ffffff',
+                        }
+                    },
+                    animation: {
+                        'float':  'float 4s ease-in-out infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%':      { transform: 'translateY(-12px)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%':      { transform: 'rotate(3deg)' },
+                        },
+                        'slide-in': {
+                            '0%': { transform: 'translateX(100%)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .font-serif, h1.display, .heading-serif { font-family: 'Playfair Display', serif; }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f0f4ff; }
+        ::-webkit-scrollbar-thumb { background: #0766d2; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #08105f; }
+
+        /* ── Hero Background ── */
+        .hero-bg {
+            background: linear-gradient(135deg, #f8faff 0%, #eef2ff 50%, #f0f7ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: -120px; right: -120px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(7,102,210,0.06) 0%, transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: radial-gradient(circle, rgba(7,102,210,0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        /* ── Wave Divider ── */
+        .wave-divider { overflow: hidden; line-height: 0; }
+        .wave-divider svg { display: block; width: 100%; }
+
+        /* ── Navbar Glow ── */
+        .navbar-glow {
+            box-shadow: 0 1px 0 rgba(255,255,255,0.05), 0 8px 32px rgba(8,16,95,0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* ── Book Card ── */
+        .book-card { transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .book-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(7,102,210,0.12); }
+
+        /* ── Star ── */
+        .star { color: #F5A623; }
+
+        /* ── Badge Pulse ── */
+        @keyframes pulseBadge {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0.5); }
+            50%       { box-shadow: 0 0 0 10px rgba(245,166,35,0); }
+        }
+        .badge-pulse { animation: pulseBadge 2.5s infinite; }
+
+        /* ── Section Alt ── */
+        .section-alt { background: linear-gradient(to bottom, #F0F7FF, #EEF6FF); }
+
+        /* ── Category Pill ── */
+        .cat-pill { transition: all 0.25s ease; }
+        .cat-pill:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.10); }
+
+        /* ── Toast Notification ── */
+        .toast-animate {
+            animation: slide-in 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+        }
+
+        /* ── PRELOADER — Elegant ── */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(135deg, #08105f 0%, #0766d2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .preloader-logo-ring {
+            width: 80px; height: 80px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.15);
+            border-top-color: #F5A623;
+            animation: spin-ring 1.2s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .preloader-logo-ring-inner {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-bottom-color: rgba(255,255,255,0.6);
+            animation: spin-ring 1.8s linear infinite reverse;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .preloader-icon {
+            color: #ffffff;
+            font-size: 22px;
+            opacity: 0.9;
+        }
+
+        @keyframes spin-ring {
+            to { transform: rotate(360deg); }
+        }
+
+        .preloader-brand {
+            margin-top: 28px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 22px;
+            letter-spacing: 0.06em;
+            opacity: 0.95;
+        }
+        .preloader-sub {
+            margin-top: 8px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            color: rgba(255,255,255,0.5);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.25em;
+        }
+        .preloader-dots {
+            display: flex; gap: 6px; margin-top: 20px;
+        }
+        .preloader-dots span {
+            width: 5px; height: 5px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            animation: dot-pulse 1.4s ease-in-out infinite;
+        }
+        .preloader-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .preloader-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes dot-pulse {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.4; }
+            40% { transform: scale(1.2); opacity: 1; }
+        }
+        .preloader-hidden { opacity: 0; visibility: hidden; }
+
+        /* ── Section Heading Style ── */
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            padding: 6px 16px;
+            border-radius: 999px;
+            margin-bottom: 14px;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #08105f;
+            line-height: 1.25;
+        }
+        .section-divider {
+            width: 48px; height: 3px;
+            background: linear-gradient(90deg, #0766d2, #F5A623);
+            border-radius: 2px;
+            margin: 14px auto 0;
+        }
+    </style>
+
+    </head>
+<body class="bg-white text-gray-800">
+    
+    <div id="preloader">
+        <div class="preloader-logo-ring">
+            <div class="preloader-logo-ring-inner">
+                <i class="bi bi-book preloader-icon"></i>
+            </div>
+        </div>
+        <div class="preloader-brand">Serindit</div>
+        <div class="preloader-sub">Balai Bahasa Provinsi Riau</div>
+        <div class="preloader-dots">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <nav class="bg-brand-darkblue navbar-glow sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+
+        
+        <a href="http://127.0.0.1:8000" class="flex items-center gap-3 flex-shrink-0 group">
+            <img src="http://127.0.0.1:8000/img/logo/logobalai.png" alt="Logo Balai Bahasa Provinsi Riau"
+                 class="h-12 w-auto object-contain"
+                 style="max-height: 48px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35)) drop-shadow(0 0 12px rgba(255,255,255,0.25));"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            
+            <div style="display:none" class="flex items-center gap-2.5">
+                <div class="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center">
+                    <i class="bi bi-book text-white text-base"></i>
+                </div>
+                <div>
+                    <span class="text-white font-bold text-lg tracking-wide" style="font-family: 'Playfair Display', serif;">Serindit</span>
+                </div>
+            </div>
+        </a>
+
+        
+        <div class="hidden md:flex items-center gap-2 font-bold text-sm text-white/90">
+            <a href="http://127.0.0.1:8000"
+               class="px-4 py-2 rounded-full flex items-center gap-2 transition text-white bg-white/15">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                </svg>
+                Beranda
+            </a>
+            <a href="http://127.0.0.1:8000/koleksi"
+               class="px-4 py-2 rounded-full transition flex items-center gap-2 hover:text-white hover:bg-white/10">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                </svg>
+                Buku
+            </a>
+            <a href="http://127.0.0.1:8000/bantuan" class="px-4 py-2 rounded-full transition flex items-center gap-2 hover:text-white hover:bg-white/10">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Jejak Pena
+            </a>
+            <a href="http://127.0.0.1:8000/bantuan" class="px-4 py-2 rounded-full transition flex items-center gap-2 hover:text-white hover:bg-white/10">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Laman Melayu
+            </a>
+            <a href="http://127.0.0.1:8000/bantuan" class="px-4 py-2 rounded-full transition flex items-center gap-2 hover:text-white hover:bg-white/10">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Warta Basa
+            </a>
+            <a href="http://127.0.0.1:8000/bantuan" class="px-4 py-2 rounded-full transition flex items-center gap-2 hover:text-white hover:bg-white/10">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Kanal Naskah
+            </a>
+            <a href="http://127.0.0.1:8000/bantuan" class="px-4 py-2 rounded-full transition flex items-center gap-2 hover:text-white hover:bg-white/10">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Tentang
+            </a>
+        </div>
+
+        
+        <form action="http://127.0.0.1:8000/koleksi" method="GET" class="relative hidden lg:block">
+            <input type="text" name="q" placeholder="Cari buku..."
+                   value=""
+                   class="pl-11 pr-4 py-2.5 rounded-full text-sm font-medium text-gray-700
+                          bg-white/95 border-0 focus:ring-2 focus:ring-brand-yellow w-56
+                          shadow-inner transition-all duration-300 focus:w-72 outline-none">
+            <button type="submit" class="absolute left-4 top-1/2 -translate-y-1/2">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </button>
+        </form>
+
+        
+        <button class="md:hidden text-white p-2">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+
+    </div>
+</nav>
+
+        <div class="bg-brand-navy border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-4 flex items-center justify-center divide-x divide-white/10">
+
+        
+        <div class="px-8 md:px-12 text-center flex items-center gap-4">
+            <div class="hidden md:flex w-10 h-10 bg-white/10 rounded-xl items-center justify-center flex-shrink-0 border border-white/5">
+                <svg class="w-5 h-5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                </svg>
+            </div>
+            <div>
+                <div id="stat-buku" class="text-2xl font-bold text-white" data-target="3" style="font-family: 'Playfair Display', serif;">0</div>
+                <div class="text-[10px] font-medium uppercase tracking-widest text-white/50 mt-0.5">Buku Digital</div>
+            </div>
+        </div>
+
+        
+        <div class="px-8 md:px-12 text-center hidden md:flex items-center gap-4">
+            <div class="hidden md:flex w-10 h-10 bg-white/10 rounded-xl items-center justify-center flex-shrink-0 border border-white/5">
+                <svg class="w-5 h-5 text-brand-sky" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+            </div>
+            <div>
+                <div id="stat-pembaca" class="text-2xl font-bold text-white" data-target="1274" style="font-family: 'Playfair Display', serif;">0</div>
+                <div class="text-[10px] font-medium uppercase tracking-widest text-white/50 mt-0.5">Pembaca</div>
+            </div>
+        </div>
+
+        
+        <div class="px-8 md:px-12 text-center flex items-center gap-4">
+            <div class="hidden md:flex w-10 h-10 bg-white/10 rounded-xl items-center justify-center flex-shrink-0 border border-white/5">
+                <svg class="w-5 h-5 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                </svg>
+            </div>
+            <div>
+                <div id="stat-kategori" class="text-2xl font-bold text-white" data-target="9" style="font-family: 'Playfair Display', serif;">0</div>
+                <div class="text-[10px] font-medium uppercase tracking-widest text-white/50 mt-0.5">Kategori</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const animateCount = (el) => {
+        const target = parseInt(el.getAttribute('data-target'), 10);
+        if (!target || target === 0) { el.textContent = '0'; return; }
+        const steps = Math.ceil(1800 / 16);
+        let step = 0;
+        const timer = setInterval(() => {
+            step++;
+            const progress = 1 - Math.pow(1 - step / steps, 3);
+            el.textContent = Math.round(target * progress).toLocaleString('id-ID');
+            if (step >= steps) {
+                el.textContent = target.toLocaleString('id-ID');
+                clearInterval(timer);
+            }
+        }, 16);
+    };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCount(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-target]').forEach(el => observer.observe(el));
+});
+</script>
+    <header class="hero-bg pt-14 pb-2 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 relative z-10">
+        <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
+
+            
+            <div class="lg:w-1/2 text-center lg:text-left">
+
+                
+                <div class="inline-flex items-center gap-2 bg-brand-blue/10 text-brand-blue px-4 py-2 rounded-full text-xs font-semibold tracking-widest uppercase mb-6" data-aos="fade-up">
+                    <span class="w-1.5 h-1.5 bg-brand-blue rounded-full"></span>
+                    Majalah Digital Balai Bahasa Riau
+                </div>
+
+                <h1 class="text-4xl lg:text-5xl xl:text-[56px] font-bold leading-[1.15] text-brand-navy mb-6" data-aos="fade-up" data-aos-delay="50"
+                    style="font-family: 'Playfair Display', serif;">
+                    Temukan Dunia<br>
+                    Melalui <span class="text-brand-blue relative inline-block">
+                        Majalah
+                        <svg class="absolute -bottom-1.5 left-0 w-full" viewBox="0 0 160 8" fill="none">
+                            <path d="M0 6 Q 40 1 80 5 Q 120 9 160 3" stroke="#F5A623" stroke-width="3" stroke-linecap="round" fill="none"/>
+                        </svg>
+                    </span>
+                </h1>
+
+                <p class="text-gray-500 text-base lg:text-lg leading-8 mb-8 max-w-md mx-auto lg:mx-0 font-normal" data-aos="fade-up" data-aos-delay="100">
+                    Platform majalah dan bacaan digital dari <strong class="text-gray-700 font-semibold">Balai Bahasa Provinsi Riau</strong>.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start" data-aos="fade-up" data-aos-delay="200">
+                    <a href="#koleksi"
+                       class="w-full sm:w-auto flex items-center justify-center gap-2.5 px-7 py-3.5 bg-brand-blue text-white font-semibold text-sm rounded-xl shadow-lg hover:bg-brand-darkblue hover:-translate-y-0.5 transition-all duration-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                        Jelajahi Koleksi
+                    </a>
+                    <a href="http://127.0.0.1:8000/koleksi"
+                       class="w-full sm:w-auto flex items-center justify-center gap-2.5 px-7 py-3.5 bg-white text-brand-navy font-semibold text-sm rounded-xl shadow-sm border border-gray-200 hover:border-brand-blue hover:text-brand-blue hover:-translate-y-0.5 transition-all duration-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        Cari Majalah
+                    </a>
+                </div>
+
+                
+                <div class="mt-10 flex flex-wrap items-center gap-3 justify-center lg:justify-start" data-aos="fade-up" data-aos-delay="300">
+                    <span class="flex items-center gap-2 bg-white text-gray-600 text-xs font-medium px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+                        <svg class="w-3.5 h-3.5 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Akses Gratis
+                    </span>
+                    <span class="flex items-center gap-2 bg-white text-gray-600 text-xs font-medium px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+                        <svg class="w-3.5 h-3.5 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Tanpa Login
+                    </span>
+                    <span class="flex items-center gap-2 bg-white text-gray-600 text-xs font-medium px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+                        <svg class="w-3.5 h-3.5 text-brand-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Untuk Semua Kalangan
+                    </span>
+                </div>
+            </div>
+
+            
+            <div class="lg:w-1/2 relative flex justify-center items-center py-10 lg:py-0" data-aos="fade-left" data-aos-delay="200">
+                <div class="relative w-full max-w-sm">
+
+                    
+                    <div class="absolute inset-0 flex items-center justify-center -z-10">
+                        <div class="w-72 h-72 rounded-full bg-gradient-to-br from-brand-blue/10 to-brand-sky/5 blur-2xl"></div>
+                    </div>
+                    <div class="absolute -top-8 -left-8 w-48 h-48 rounded-full border border-brand-blue/10 -z-10"></div>
+                    <div class="absolute -bottom-8 -right-8 w-32 h-32 rounded-full border border-brand-yellow/20 -z-10"></div>
+
+                    
+                    <img src="http://127.0.0.1:8000/img/logo/Serindit.png" alt="Serindit"
+                         class="relative z-10 w-full h-auto object-contain animate-float"
+                         style="filter: drop-shadow(0 32px 64px rgba(7,102,210,0.15)) drop-shadow(0 8px 16px rgba(7,102,210,0.10));"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.removeProperty('display');">
+
+                    
+                    <div style="display:none" class="relative z-10 w-full h-72 flex flex-col items-center justify-center">
+                        <div class="w-32 h-40 bg-gradient-to-br from-brand-blue to-brand-darkblue rounded-2xl shadow-2xl flex items-center justify-center animate-float">
+                            <i class="bi bi-book text-white text-6xl opacity-90"></i>
+                        </div>
+                    </div>
+
+                    
+                    
+
+                    
+                    
+
+                    
+                    <div class="absolute -top-4 left-10 w-3 h-3 bg-brand-yellow rounded-full opacity-60 animate-float" style="animation-delay:0.3s;"></div>
+                    <div class="absolute top-1/3 -right-6 w-2 h-2 bg-brand-green rounded-full opacity-50 animate-float" style="animation-delay:0.9s;"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+    <div class="relative mt-6">
+        <div class="wave-divider">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 30C360 60 720 0 1080 35C1260 52 1380 20 1440 30V60H0Z" fill="#F8FAFF"/>
+            </svg>
+        </div>
+    </div>
+</header>
+    <section id="koleksi" class="bg-[#F8FAFF] py-16">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+        <div class="text-center mb-12" data-aos="fade-up">
+            <span class="section-label bg-red-50 text-red-500">
+                <span class="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+                Koleksi Spesial & Terbaru
+            </span>
+            <h2 class="section-title text-3xl lg:text-4xl">Edisi Terbatas & Buku Baru</h2>
+            <div class="section-divider"></div>
+            <p class="text-gray-500 mt-4 text-sm font-normal max-w-lg mx-auto">Koleksi terhangat yang baru saja hadir di perpustakaan digital kami.</p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5 lg:gap-6">
+                        <div class="book-card group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-delay="0">
+                <div class="relative aspect-[5/7] bg-gradient-to-br from-slate-50 to-blue-50 overflow-hidden">
+                                            <div class="absolute top-2.5 left-2.5 bg-brand-blue text-white text-[9px] font-semibold px-2.5 py-1 rounded-md shadow z-10 tracking-wide">BARU</div>
+                    
+                                            <img src="http://127.0.0.1:8000/storage/covers/zkI91RmSi7dtrnm77KOXs9mcGqTKT4qzTcX6jmPV.png"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                             alt="puti">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+                        <a href="http://127.0.0.1:8000/buku/puti"
+                           class="w-full py-2.5 bg-white text-brand-navy font-semibold text-xs rounded-xl text-center shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            Baca Sekarang
+                        </a>
+                    </div>
+                </div>
+
+                <div class="p-4 flex-1 flex flex-col">
+                    <h3 class="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 mb-1.5" title="puti">
+                        puti
+                    </h3>
+                    <p class="text-[11px] text-gray-400 font-normal">Semua Kalangan</p>
+                    <div class="mt-auto pt-3 border-t border-gray-50 flex items-center justify-between mt-3">
+                        <span class="flex items-center gap-1.5 text-[11px] text-gray-400">
+                            <i class="bi bi-eye"></i> 1
+                        </span>
+                        <span class="bg-blue-50 text-brand-blue text-[10px] font-medium px-2 py-0.5 rounded-md">PDF</span>
+                    </div>
+                </div>
+            </div>
+                        <div class="book-card group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-delay="80">
+                <div class="relative aspect-[5/7] bg-gradient-to-br from-slate-50 to-blue-50 overflow-hidden">
+                                            <div class="absolute top-2.5 left-2.5 bg-brand-blue text-white text-[9px] font-semibold px-2.5 py-1 rounded-md shadow z-10 tracking-wide">BARU</div>
+                    
+                                            <img src="http://127.0.0.1:8000/storage/covers/behQ3ClVTZJaTiPiOiC7Z9UGvD1FuBABI6kP3xXy.png"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                             alt="Selendang Delima">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+                        <a href="http://127.0.0.1:8000/buku/selendang-delima"
+                           class="w-full py-2.5 bg-white text-brand-navy font-semibold text-xs rounded-xl text-center shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            Baca Sekarang
+                        </a>
+                    </div>
+                </div>
+
+                <div class="p-4 flex-1 flex flex-col">
+                    <h3 class="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 mb-1.5" title="Selendang Delima">
+                        Selendang Delima
+                    </h3>
+                    <p class="text-[11px] text-gray-400 font-normal">C</p>
+                    <div class="mt-auto pt-3 border-t border-gray-50 flex items-center justify-between mt-3">
+                        <span class="flex items-center gap-1.5 text-[11px] text-gray-400">
+                            <i class="bi bi-eye"></i> 6
+                        </span>
+                        <span class="bg-blue-50 text-brand-blue text-[10px] font-medium px-2 py-0.5 rounded-md">PDF</span>
+                    </div>
+                </div>
+            </div>
+                        <div class="book-card group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-delay="160">
+                <div class="relative aspect-[5/7] bg-gradient-to-br from-slate-50 to-blue-50 overflow-hidden">
+                                            <div class="absolute top-2.5 left-2.5 bg-brand-blue text-white text-[9px] font-semibold px-2.5 py-1 rounded-md shadow z-10 tracking-wide">BARU</div>
+                    
+                                            <img src="http://127.0.0.1:8000/storage/covers/GaAuVjuGwtYfgmLCJcRF0P0rB4m4K1FiJm62xE3A.png"
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                             alt="Asal Mula Desa Bedari">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+                        <a href="http://127.0.0.1:8000/buku/asal-mula-desa-bedari"
+                           class="w-full py-2.5 bg-white text-brand-navy font-semibold text-xs rounded-xl text-center shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                            Baca Sekarang
+                        </a>
+                    </div>
+                </div>
+
+                <div class="p-4 flex-1 flex flex-col">
+                    <h3 class="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 mb-1.5" title="Asal Mula Desa Bedari">
+                        Asal Mula Desa Bedari
+                    </h3>
+                    <p class="text-[11px] text-gray-400 font-normal">D</p>
+                    <div class="mt-auto pt-3 border-t border-gray-50 flex items-center justify-between mt-3">
+                        <span class="flex items-center gap-1.5 text-[11px] text-gray-400">
+                            <i class="bi bi-eye"></i> 7
+                        </span>
+                        <span class="bg-blue-50 text-brand-blue text-[10px] font-medium px-2 py-0.5 rounded-md">PDF</span>
+                    </div>
+                </div>
+            </div>
+                    </div>
+    </div>
+</section>
+
+
+
+
+
+<section class="bg-[#EEF6FF] py-16">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+        <div class="flex items-end justify-between mb-12" data-aos="fade-right">
+            <div>
+                <span class="section-label bg-brand-yellow/10 text-brand-yellow">
+                    <span class="w-1.5 h-1.5 bg-brand-yellow rounded-full"></span>
+                    Paling Banyak Dibaca
+                </span>
+                <h2 class="section-title text-3xl lg:text-4xl">Koleksi Populer</h2>
+            </div>
+            <a href="http://127.0.0.1:8000/koleksi?sort=populer" class="hidden md:flex items-center gap-1.5 text-brand-blue font-medium text-sm hover:underline underline-offset-4 flex-shrink-0 mb-1">
+                Lihat Semua <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-200 group">
+                <div class="w-24 h-32 flex-shrink-0 overflow-hidden bg-gradient-to-br from-slate-100 to-blue-50">
+                                            <img src="http://127.0.0.1:8000/storage/covers/GaAuVjuGwtYfgmLCJcRF0P0rB4m4K1FiJm62xE3A.png" class="w-full h-full object-cover" alt="Asal Mula Desa Bedari">
+                                    </div>
+                <div class="p-4 flex flex-col justify-between flex-1 min-w-0">
+                    <div>
+                        <span class="inline-block bg-blue-50 text-brand-blue text-[10px] font-medium px-2 py-0.5 rounded tracking-wide mb-2">Populer</span>
+                        <h4 class="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 group-hover:text-brand-blue transition mb-1">Asal Mula Desa Bedari</h4>
+                        <p class="text-[11px] text-gray-400 font-normal">D</p>
+                    </div>
+                    <div class="flex items-center justify-between mt-3">
+                        <div class="flex items-center gap-3 text-[11px] text-gray-400">
+                            <span class="flex items-center gap-1"><i class="bi bi-eye"></i> 7</span>
+                            <span class="flex items-center gap-1"><i class="bi bi-heart"></i> 1</span>
+                        </div>
+                        <a href="http://127.0.0.1:8000/buku/asal-mula-desa-bedari"
+                           class="text-xs font-medium text-white bg-brand-blue px-3 py-1.5 rounded-lg hover:bg-brand-darkblue transition flex-shrink-0">
+                            Baca
+                        </a>
+                    </div>
+                </div>
+            </div>
+                        <div class="flex bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-200 group">
+                <div class="w-24 h-32 flex-shrink-0 overflow-hidden bg-gradient-to-br from-slate-100 to-blue-50">
+                                            <img src="http://127.0.0.1:8000/storage/covers/behQ3ClVTZJaTiPiOiC7Z9UGvD1FuBABI6kP3xXy.png" class="w-full h-full object-cover" alt="Selendang Delima">
+                                    </div>
+                <div class="p-4 flex flex-col justify-between flex-1 min-w-0">
+                    <div>
+                        <span class="inline-block bg-blue-50 text-brand-blue text-[10px] font-medium px-2 py-0.5 rounded tracking-wide mb-2">Populer</span>
+                        <h4 class="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 group-hover:text-brand-blue transition mb-1">Selendang Delima</h4>
+                        <p class="text-[11px] text-gray-400 font-normal">C</p>
+                    </div>
+                    <div class="flex items-center justify-between mt-3">
+                        <div class="flex items-center gap-3 text-[11px] text-gray-400">
+                            <span class="flex items-center gap-1"><i class="bi bi-eye"></i> 6</span>
+                            <span class="flex items-center gap-1"><i class="bi bi-heart"></i> 1</span>
+                        </div>
+                        <a href="http://127.0.0.1:8000/buku/selendang-delima"
+                           class="text-xs font-medium text-white bg-brand-blue px-3 py-1.5 rounded-lg hover:bg-brand-darkblue transition flex-shrink-0">
+                            Baca
+                        </a>
+                    </div>
+                </div>
+            </div>
+                        <div class="flex bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md hover:-translate-y-1 transition-all duration-200 group">
+                <div class="w-24 h-32 flex-shrink-0 overflow-hidden bg-gradient-to-br from-slate-100 to-blue-50">
+                                            <img src="http://127.0.0.1:8000/storage/covers/zkI91RmSi7dtrnm77KOXs9mcGqTKT4qzTcX6jmPV.png" class="w-full h-full object-cover" alt="puti">
+                                    </div>
+                <div class="p-4 flex flex-col justify-between flex-1 min-w-0">
+                    <div>
+                        <span class="inline-block bg-blue-50 text-brand-blue text-[10px] font-medium px-2 py-0.5 rounded tracking-wide mb-2">Populer</span>
+                        <h4 class="font-semibold text-gray-900 text-sm leading-snug line-clamp-2 group-hover:text-brand-blue transition mb-1">puti</h4>
+                        <p class="text-[11px] text-gray-400 font-normal">Semua Kalangan</p>
+                    </div>
+                    <div class="flex items-center justify-between mt-3">
+                        <div class="flex items-center gap-3 text-[11px] text-gray-400">
+                            <span class="flex items-center gap-1"><i class="bi bi-eye"></i> 1</span>
+                            <span class="flex items-center gap-1"><i class="bi bi-heart"></i> 0</span>
+                        </div>
+                        <a href="http://127.0.0.1:8000/buku/puti"
+                           class="text-xs font-medium text-white bg-brand-blue px-3 py-1.5 rounded-lg hover:bg-brand-darkblue transition flex-shrink-0">
+                            Baca
+                        </a>
+                    </div>
+                </div>
+            </div>
+                    </div>
+    </div>
+</section>
+
+
+
+<section id="kategori" class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10">
+        <div class="text-center mb-12">
+            <span class="section-label bg-green-50 text-green-600">
+                <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                Semua Topik
+            </span>
+            <h2 class="section-title text-3xl lg:text-4xl">Jelajahi Kategori</h2>
+            <div class="section-divider"></div>
+            <p class="text-gray-400 mt-4 text-sm font-normal">Temukan buku berdasarkan topik yang Anda minati.</p>
+        </div>
+
+        
+        <div class="flex flex-wrap justify-center gap-3">
+                                    <a href="http://127.0.0.1:8000/koleksi?kategori=1"
+               class="cat-pill flex items-center gap-2.5 px-5 py-2.5 rounded-xl border font-medium text-sm transition-all hover:text-white hover:shadow-md bg-red-50 text-red-600 border-red-100 hover:bg-red-500">
+                Alam
+                <span class="text-[11px] opacity-60 bg-black/8 px-2 py-0.5 rounded-full">0</span>
+            </a>
+                                    <a href="http://127.0.0.1:8000/koleksi?kategori=2"
+               class="cat-pill flex items-center gap-2.5 px-5 py-2.5 rounded-xl border font-medium text-sm transition-all hover:text-white hover:shadow-md bg-orange-50 text-orange-600 border-orange-100 hover:bg-orange-500">
+                Cerita Rakyat
+                <span class="text-[11px] opacity-60 bg-black/8 px-2 py-0.5 rounded-full">1</span>
+            </a>
+                                    <a href="http://127.0.0.1:8000/koleksi?kategori=3"
+               class="cat-pill flex items-center gap-2.5 px-5 py-2.5 rounded-xl border font-medium text-sm transition-all hover:text-white hover:shadow-md bg-amber-50 text-amber-700 border-amber-100 hover:bg-amber-500">
+                Edisi Terbatas
+                <span class="text-[11px] opacity-60 bg-black/8 px-2 py-0.5 rounded-full">0</span>
+            </a>
+                                    <a href="http://127.0.0.1:8000/koleksi?kategori=4"
+               class="cat-pill flex items-center gap-2.5 px-5 py-2.5 rounded-xl border font-medium text-sm transition-all hover:text-white hover:shadow-md bg-green-50 text-green-600 border-green-100 hover:bg-green-500">
+                Ekonomi Kreatif
+                <span class="text-[11px] opacity-60 bg-black/8 px-2 py-0.5 rounded-full">0</span>
+            </a>
+                                    <a href="http://127.0.0.1:8000/koleksi?kategori=5"
+               class="cat-pill flex items-center gap-2.5 px-5 py-2.5 rounded-xl border font-medium text-sm transition-all hover:text-white hover:shadow-md bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-500">
+                Matematika
+                <span class="text-[11px] opacity-60 bg-black/8 px-2 py-0.5 rounded-full">0</span>
+            </a>
+                                    <a href="http://127.0.0.1:8000/koleksi?kategori=6"
+               class="cat-pill flex items-center gap-2.5 px-5 py-2.5 rounded-xl border font-medium text-sm transition-all hover:text-white hover:shadow-md bg-indigo-50 text-indigo-600 border-indigo-100 hover:bg-indigo-500">
+                Pengembangan Diri
+                <span class="text-[11px] opacity-60 bg-black/8 px-2 py-0.5 rounded-full">1</span>
+            </a>
+                                    <a href="http://127.0.0.1:8000/koleksi?kategori=7"
+               class="cat-pill flex items-center gap-2.5 px-5 py-2.5 rounded-xl border font-medium text-sm transition-all hover:text-white hover:shadow-md bg-purple-50 text-purple-600 border-purple-100 hover:bg-purple-500">
+                Sains
+                <span class="text-[11px] opacity-60 bg-black/8 px-2 py-0.5 rounded-full">0</span>
+            </a>
+                                    <a href="http://127.0.0.1:8000/koleksi?kategori=8"
+               class="cat-pill flex items-center gap-2.5 px-5 py-2.5 rounded-xl border font-medium text-sm transition-all hover:text-white hover:shadow-md bg-red-50 text-red-600 border-red-100 hover:bg-red-500">
+                Seni Budaya
+                <span class="text-[11px] opacity-60 bg-black/8 px-2 py-0.5 rounded-full">1</span>
+            </a>
+                                    <a href="http://127.0.0.1:8000/koleksi?kategori=9"
+               class="cat-pill flex items-center gap-2.5 px-5 py-2.5 rounded-xl border font-medium text-sm transition-all hover:text-white hover:shadow-md bg-orange-50 text-orange-600 border-orange-100 hover:bg-orange-500">
+                Tokoh
+                <span class="text-[11px] opacity-60 bg-black/8 px-2 py-0.5 rounded-full">1</span>
+            </a>
+                    </div>
+    </div>
+</section>
+
+
+
+<section class="py-16 bg-brand-navy relative overflow-hidden">
+    
+    <div class="absolute inset-0 pointer-events-none">
+        <div class="absolute -top-20 -right-20 w-80 h-80 rounded-full border border-white/5"></div>
+        <div class="absolute -bottom-20 -left-20 w-96 h-96 rounded-full border border-white/5"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-white/3"></div>
+        <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 32px 32px;"></div>
+    </div>
+
+    <div class="max-w-2xl mx-auto px-6 lg:px-10 text-center relative z-10">
+        <div class="inline-flex items-center gap-2 bg-white/8 text-white/70 px-4 py-2 rounded-full text-xs font-medium tracking-widest uppercase mb-6 border border-white/10">
+            <span class="w-1.5 h-1.5 bg-brand-yellow rounded-full animate-pulse"></span>
+            Perpustakaan Digital Gratis
+        </div>
+        <h2 class="text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight" style="font-family: 'Playfair Display', serif;">
+            Mulai Perjalanan Literasi<br>Bersama Serindit
+        </h2>
+        <p class="text-white/50 text-base mb-8 font-normal leading-relaxed">
+            Ribuan buku menunggu Anda. Gratis, mudah diakses, dan hadir untuk semua kalangan.
+        </p>
+        <a href="#koleksi"
+           class="inline-flex items-center gap-2.5 px-8 py-3.5 bg-brand-yellow text-white font-semibold text-sm rounded-xl shadow-xl badge-pulse hover:bg-yellow-400 hover:-translate-y-0.5 transition-all duration-200">
+            <i class="bi bi-book"></i>
+            Jelajahi Koleksi Sekarang
+        </a>
+    </div>
+</section>
+
+    
+    
+    <footer class="relative bg-brand-navy text-white overflow-hidden">
+    
+    <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/50 via-transparent to-black/30 pointer-events-none"></div>
+
+    
+    <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-brand-blue/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-8 lg:px-12 pt-14 pb-12 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
+            
+            
+            <div class="lg:col-span-4 space-y-6">
+                <div>
+                    
+                    <div class="mb-6">
+                        <img src="http://127.0.0.1:8000/img/logo/logobalai.png" 
+                             alt="Balai Bahasa Riau" 
+                             class="h-16 w-auto object-contain"
+                             style="filter: drop-shadow(0 4px 12px rgba(255,255,255,0.2));">
+                    </div>
+                    <p class="text-blue-100/70 text-sm leading-relaxed font-medium max-w-sm">
+                        Platform literasi digital dari <strong class="text-white">Balai Bahasa Provinsi Riau</strong>. 
+                        Menghadirkan ribuan karya sastra dan buku berkualitas untuk semua kalangan — mendorong budaya baca di seluruh Indonesia.
+                    </p>
+                </div>
+                
+                
+                <div class="flex items-center gap-3">
+                                                            <a href="https://balaibahasariau.kemendikdasmen.go.id/" class="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-brand-yellow hover:text-white hover:-translate-y-1 transition-all duration-300 border border-white/5 backdrop-blur-sm">
+                        <i class="bi bi-globe text-base"></i>
+                    </a>
+                                        <a href="https://www.facebook.com/balaibahasa.provinsiriau" class="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-brand-yellow hover:text-white hover:-translate-y-1 transition-all duration-300 border border-white/5 backdrop-blur-sm">
+                        <i class="bi bi-facebook text-base"></i>
+                    </a>
+                                        <a href="https://www.instagram.com/balaibahasaprovinsiriau/" class="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-brand-yellow hover:text-white hover:-translate-y-1 transition-all duration-300 border border-white/5 backdrop-blur-sm">
+                        <i class="bi bi-instagram text-base"></i>
+                    </a>
+                                        <a href="https://www.youtube.com/@balaibahasariau?si=vtkes8A9fEQohI_L" class="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-brand-yellow hover:text-white hover:-translate-y-1 transition-all duration-300 border border-white/5 backdrop-blur-sm">
+                        <i class="bi bi-youtube text-base"></i>
+                    </a>
+                                        <a href="https://www.tiktok.com/@balai.bahasa.riau" class="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center hover:bg-brand-yellow hover:text-white hover:-translate-y-1 transition-all duration-300 border border-white/5 backdrop-blur-sm">
+                        <i class="bi bi-tiktok text-base"></i>
+                    </a>
+                                    </div>
+            </div>
+
+            
+            <div class="lg:col-span-2">
+                <h4 class="text-white font-black text-xs uppercase tracking-widest mb-6 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-brand-yellow rounded-full"></span>
+                    Menu
+                </h4>
+                <ul class="space-y-3.5 text-[13px] text-blue-100/60 font-bold">
+                    <li><a href="http://127.0.0.1:8000" class="hover:text-brand-yellow transition">Beranda</a></li>
+                    <li><a href="http://127.0.0.1:8000/koleksi" class="hover:text-brand-yellow transition">Koleksi Buku</a></li>
+                    <li><a href="https://balaibahasariau.kemendikdasmen.go.id/" class="hover:text-brand-yellow transition">Laman Balai</a></li>
+                    <li><a href="#bantuan" class="hover:text-brand-yellow transition">Bantuan</a></li>
+                </ul>
+            </div>
+
+            
+            <div class="lg:col-span-3">
+                <h4 class="text-white font-black text-xs uppercase tracking-widest mb-6 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-brand-blue rounded-full"></span>
+                    Hubungi Kami
+                </h4>
+                <div class="space-y-4">
+                    <div class="flex items-start gap-3">
+                        <i class="bi bi-geo-alt text-brand-sky text-base mt-0.5"></i>
+                        <p class="text-[12px] text-blue-100/60 font-bold leading-relaxed">
+                            Jl. Binawidya, Simpang Baru, Tampan, Pekanbaru, Riau 28293
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="bi bi-envelope text-brand-sky text-base"></i>
+                        <p class="text-[12px] text-blue-100/60 font-bold">info@balaibahasariau.id</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="bi bi-telephone text-brand-sky text-base"></i>
+                        <p class="text-[12px] text-blue-100/60 font-bold">(0761) 65930</p>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="lg:col-span-3">
+                <div class="rounded-2xl overflow-hidden border-2 border-white/5 shadow-2xl h-40">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3613.51215923794!2d101.3819563!3d0.47302600000000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a853e3083e97%3A0x5c40a215adfd57fd!2sBalai%20Bahasa%20Riau!5e1!3m2!1sid!2sid!4v1771628852260!5m2!1sid!2sid" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+    <div class="relative pt-12">
+        
+        <div class="bg-black/10 backdrop-blur-md py-6 border-t border-white/5">
+            <div class="max-w-6xl mx-auto px-8 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-4 relative z-20">
+                <p class="text-[11px] text-white/40 font-semibold uppercase tracking-widest text-center md:text-left">
+                    &copy; 2026 Serindit &mdash; Balai Bahasa Provinsi Riau. Dikembangkan oleh Tim IT.
+                </p>
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 bg-brand-yellow rounded-full animate-pulse"></span>
+                    <p class="text-[10px] text-white/50 font-semibold uppercase tracking-widest">
+                        Literasi untuk Semua Generasi
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="absolute bottom-0 left-0 w-full h-[120px] pointer-events-none opacity-30 mix-blend-overlay z-10"
+             style="background-image: url('http://127.0.0.1:8000/img/paternmelayu.svg'); background-repeat: repeat-x; background-size: contain; background-position: bottom;">
+        </div>
+        
+        
+        <div class="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+    </div>
+</footer>
+
+    
+    
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100,
+        easing: 'ease-out-cubic'
+      });
+
+      // ── PRELOADER LOGIC ──
+      window.addEventListener('load', function() {
+          const preloader = document.getElementById('preloader');
+          setTimeout(() => {
+              preloader.classList.add('preloader-hidden');
+          }, 800); // Minimum delay to see the animation
+      });
+
+      // Show loader on navigation
+      window.addEventListener('beforeunload', function() {
+          document.getElementById('preloader').classList.remove('preloader-hidden');
+      });
+    </script>
+
+</body>
+</html>

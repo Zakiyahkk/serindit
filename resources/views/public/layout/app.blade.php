@@ -18,16 +18,16 @@
                     },
                     colors: {
                         brand: {
-                            blue:   '#0766d2ff',
-                            sky:    '#1d83d1',
+                            blue:   '#1e7b1c', // Changed to green scheme
+                            sky:    '#66ea80', // Changed to green scheme
                             green:  '#27AE60',
                             yellow: '#F5A623',
                             yellow2: '#ffd500ff',
                             orange: '#E8621E',
                             purple: '#7C3AED',
                             pink:   '#E91E8C',
-                            navy: '#08105fff',
-                            darkblue: '#2838c3ff',
+                            navy: '#0b3d0a', // Changed to dark green
+                            darkblue: '#115410', // Changed to dark green
                             gray: '#94A3B8',
                             white: '#ffffff',
                         }
@@ -68,13 +68,13 @@
 
         /* ── Scrollbar ── */
         ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #f0f4ff; }
-        ::-webkit-scrollbar-thumb { background: #0766d2; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #08105f; }
+        ::-webkit-scrollbar-track { background: #f0fdf4; }
+        ::-webkit-scrollbar-thumb { background: #1e7b1c; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0b3d0a; }
 
         /* ── Hero Background ── */
         .hero-bg {
-            background: linear-gradient(135deg, #f8faff 0%, #eef2ff 50%, #f0f7ff 100%);
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 50%, #bbf7d0 100%);
             position: relative;
             overflow: hidden;
         }
@@ -83,14 +83,14 @@
             position: absolute;
             top: -120px; right: -120px;
             width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(7,102,210,0.06) 0%, transparent 65%);
+            background: radial-gradient(circle, rgba(30,123,28,0.06) 0%, transparent 65%);
             border-radius: 50%;
             pointer-events: none;
         }
         .hero-bg::after {
             content: '';
             position: absolute; inset: 0;
-            background-image: radial-gradient(circle, rgba(7,102,210,0.08) 1px, transparent 1px);
+            background-image: radial-gradient(circle, rgba(30,123,28,0.08) 1px, transparent 1px);
             background-size: 40px 40px;
             opacity: 0.4;
             pointer-events: none;
@@ -102,14 +102,14 @@
 
         /* ── Navbar Glow ── */
         .navbar-glow {
-            box-shadow: 0 1px 0 rgba(255,255,255,0.05), 0 8px 32px rgba(8,16,95,0.3);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.05), 0 8px 32px rgba(11,61,10,0.3);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
 
         /* ── Book Card ── */
         .book-card { transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .book-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(7,102,210,0.12); }
+        .book-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(30,123,28,0.12); }
 
         /* ── Star ── */
         .star { color: #F5A623; }
@@ -138,7 +138,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, #08105f 0%, #0766d2 100%);
+            background: linear-gradient(135deg, #0b3d0a 0%, #1e7b1c 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -228,12 +228,12 @@
         .section-title {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
-            color: #08105f;
+            color: #0b3d0a;
             line-height: 1.25;
         }
         .section-divider {
             width: 48px; height: 3px;
-            background: linear-gradient(90deg, #0766d2, #F5A623);
+            background: linear-gradient(90deg, #1e7b1c, #F5A623);
             border-radius: 2px;
             margin: 14px auto 0;
         }
