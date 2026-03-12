@@ -8,7 +8,7 @@
        PAGE HERO — Kategori (Hijau Teal)
     ══════════════════════════════════ */
     .page-hero {
-        background: linear-gradient(135deg, #eaaf0eff 0%, #e07706ff 55%, #4d6ce8ff 100%);
+        background: linear-gradient(135deg,  #a50024 0%, rgb(248, 248, 114) 60%, rgb(6, 176, 3) 100%);
         border-radius: 16px;
         padding: 28px 32px;
         color: #fff;
@@ -41,7 +41,6 @@
     }
     .page-hero p {
         font-size: 13px; margin: 0;
-        opacity: 0.8;
         position: relative; z-index: 1;
     }
     .btn-add {
@@ -167,7 +166,7 @@
         transition: all 0.18s; text-decoration: none;
     }
     .btn-action:hover { transform: translateY(-1px); }
-    .btn-edit   { background: #eff6ff; color: #3b82f6; }
+    .btn-edit   { background: #f3f8cf; color: #e09d00ff; }
     .btn-edit:hover   { background: #3b82f6; color: #fff; }
     .btn-delete { background: #fef2f2; color: #ef4444; }
     .btn-delete:hover { background: #ef4444; color: #fff; }
@@ -399,7 +398,7 @@
                 @method('PUT')
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        <i class="bi bi-pencil-square me-2" style="color:#3b82f6"></i>Edit Kategori
+                        <i class="bi bi-pencil-square me-2" style="color:#e09d00ff"></i>Edit Kategori
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>

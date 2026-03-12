@@ -450,9 +450,7 @@
         $totalReads = DB::table('book_stats')->sum('reads_count');
 
         $recentBooks = DB::table('books')
-            ->leftJoin('reading_levels', 'books.reading_level_id', '=', 'reading_levels.id')
-            ->select('books.*', 'reading_levels.name as reading_level')
-            ->orderBy('books.created_at', 'desc')
+            ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
 
@@ -559,9 +557,6 @@
                                 <span>
                                     <i class="bi bi-clock"></i>
                                     {{ $book->created_at ? \Carbon\Carbon::parse($book->created_at)->diffForHumans() : '—' }}
-                                    @if ($book->reading_level)
-                                        <span class="book-level">{{ $book->reading_level }}</span>
-                                    @endif
                                 </span>
                             </div>
                             <a href="{{ route('admin.books.edit', $book->id) }}" class="btn-edit-sm" title="Edit">
