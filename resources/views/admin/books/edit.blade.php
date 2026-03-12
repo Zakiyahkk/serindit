@@ -666,8 +666,6 @@ let tocItems = {!! $book->table_of_contents ?: '[]' !!};
 if (!Array.isArray(tocItems)) {
     tocItems = [];
 }
-
-<<<<<<< HEAD
 function renderToc(){
 
 const tbody=document.getElementById('toc_tbody')
