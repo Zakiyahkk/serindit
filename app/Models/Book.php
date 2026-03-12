@@ -26,13 +26,6 @@ class Book extends Model
     ];
 
     /**
-     * Cast JSON column
-     */
-    protected $casts = [
-        'table_of_contents' => 'array',
-    ];
-
-    /**
      * Statistik buku (views, likes, reads).
      */
     public function stat(): HasOne

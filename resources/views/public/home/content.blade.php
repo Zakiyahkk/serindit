@@ -14,14 +14,12 @@
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-5 lg:gap-6">
-            @forelse($terbatas->merge($terbaru)->unique('id')->take(8) as $index => $book)
+            @forelse($terbaru->take(8) as $index => $book)
             <div class="book-card group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-delay="{{ ($index % 4) * 80 }}">
                 <div class="relative aspect-[5/7] bg-gradient-to-br from-slate-50 to-blue-50 overflow-hidden">
-                    @if($book->license == 'Buku Edisi Terbatas' || $book->license == 'Majalah Edisi Terbatas')
-                        <div class="absolute top-2.5 left-2.5 bg-green-600 text-white text-[9px] font-semibold px-2.5 py-1 rounded-md shadow z-10 tracking-wide">MAJALAH KHUSUS</div>
-                    @else
-                        <div class="absolute top-2.5 left-2.5 bg-brand-green text-white text-[9px] font-semibold px-2.5 py-1 rounded-md shadow z-10 tracking-wide">MAJALAH BARU</div>
-                    @endif
+                    <div class="absolute top-2.5 left-2.5 bg-brand-green text-white text-[9px] font-semibold px-2.5 py-1 rounded-md shadow z-10 tracking-wide">
+                    MAJALAH BARU
+                    </div>
 
                     @if($book->cover_image)
                         <img src="{{ asset('storage/' . $book->cover_image) }}"
