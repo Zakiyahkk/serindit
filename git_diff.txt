@@ -1,0 +1,10 @@
+M	public/css/admin.css
+A	public/img/logo/Serindit.png
+D	public/img/logo/sembari.png
+M	resources/views/admin/books/create.blade.php
+M	resources/views/admin/books/edit.blade.php
+M	resources/views/admin/dashboard/index.blade.php
+M	resources/views/admin/layout.blade.php
+M	resources/views/admin/login.blade.php
+M	resources/views/public/home/hero.blade.php
+M	resources/views/public/layout/header.blade.php

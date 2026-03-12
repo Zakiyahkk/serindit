@@ -208,8 +208,40 @@
             <i class="bi bi-book-half"></i>
             {{ strtoupper($book->title) }}
         </div>
-        <div style="width: 44px"></div>
+        <div>
+            @if($book->table_of_contents && count(json_decode($book->table_of_contents, true) ?? []) > 0)
+                <button id="toc-btn" style="background:none; border:none; color: var(--primary); font-size: 1.4rem; cursor: pointer; padding: 5px;">
+                    <i class="bi bi-list"></i>
+                </button>
+            @else
+                <div style="width: 44px"></div>
+            @endif
+        </div>
     </div>
+
+    <!-- TOC Overlay -->
+    @if($book->table_of_contents && count(json_decode($book->table_of_contents, true) ?? []) > 0)
+    <div id="toc-overlay" style="position: fixed; top: 0; bottom: 0; left: -320px; width: 320px; background: white; z-index: 2000; box-shadow: 2px 0 15px rgba(0,0,0,0.1); transition: left 0.3s; display: flex; flex-direction: column;">
+        <div style="padding: 20px; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between;">
+            <h5 style="margin: 0; font-weight: 700; color: #1e293b; font-size: 16px;">Daftar Isi</h5>
+            <i class="bi bi-x-lg" id="close-toc" style="cursor:pointer; color: #94a3b8; font-size: 1.2rem;"></i>
+        </div>
+        <div style="flex: 1; overflow-y: auto; padding: 10px;">
+            @php $tocItems = json_decode($book->table_of_contents, true) ?? []; @endphp
+            @foreach($tocItems as $item)
+                <div class="toc-item" onclick="jumpToPage({{ $item['page'] ?? 1 }})" style="padding: 12px 15px; border-radius: 8px; cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 14px; color: #334155; font-weight: 500;">{{ $item['title'] ?? '' }}</span>
+                    <span style="font-size: 12px; color: #94a3b8; font-weight: 600;">{{ $item['page'] ?? '' }}</span>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    <div id="toc-backdrop" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; display: none; opacity: 0; transition: opacity 0.3s;"></div>
+
+    <style>
+        .toc-item:hover { background: #f8fafc; color: var(--primary); padding-left: 20px !important; }
+    </style>
+    @endif
 
     <button id="prev-btn" class="side-nav"><i class="bi bi-chevron-left"></i></button>
     <button id="next-btn" class="side-nav"><i class="bi bi-chevron-right"></i></button>
@@ -238,6 +270,31 @@
     <script>
         let pageFlip;
         
+        @if($book->table_of_contents && count(json_decode($book->table_of_contents, true) ?? []) > 0)
+        document.getElementById('toc-btn').onclick = () => {
+            document.getElementById('toc-overlay').style.left = '0';
+            document.getElementById('toc-backdrop').style.display = 'block';
+            setTimeout(() => document.getElementById('toc-backdrop').style.opacity = '1', 10);
+        };
+        document.getElementById('close-toc').onclick = closeToc;
+        document.getElementById('toc-backdrop').onclick = closeToc;
+
+        function closeToc() {
+            document.getElementById('toc-overlay').style.left = '-320px';
+            document.getElementById('toc-backdrop').style.opacity = '0';
+            setTimeout(() => document.getElementById('toc-backdrop').style.display = 'none', 300);
+        }
+
+        window.jumpToPage = function(pageNumber) {
+            closeToc();
+            if(pageFlip) {
+                // Konversi string ke int, kurangi 1 karena indeks array halaman
+                const targetIdx = parseInt(pageNumber) - 1;
+                pageFlip.flip(targetIdx);
+            }
+        };
+        @endif
+
         function hideFinish() {
             document.getElementById('finish-overlay').classList.remove('show');
         }

@@ -4,23 +4,23 @@
 <section id="koleksi" class="bg-[#F8FAFF] py-16">
     <div class="max-w-6xl mx-auto px-6 lg:px-10">
         <div class="text-center mb-12" data-aos="fade-up">
-            <span class="section-label bg-red-50 text-red-500">
-                <span class="w-1.5 h-1.5 bg-red-400 rounded-full"></span>
+            <span class="section-label bg-green-50 text-green-600">
+                <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
                 Koleksi Spesial & Terbaru
             </span>
-            <h2 class="section-title text-3xl lg:text-4xl">Edisi Terbatas & Buku Baru</h2>
+            <h2 class="section-title text-3xl lg:text-4xl">Majalah Edisi Khusus & Terbaru</h2>
             <div class="section-divider"></div>
-            <p class="text-gray-500 mt-4 text-sm font-normal max-w-lg mx-auto">Koleksi terhangat yang baru saja hadir di perpustakaan digital kami.</p>
+            <p class="text-gray-500 mt-4 text-sm font-normal max-w-lg mx-auto">Koleksi majalah terhangat yang baru saja hadir di perpustakaan digital kami.</p>
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-5 lg:gap-6">
             @forelse($terbatas->merge($terbaru)->unique('id')->take(8) as $index => $book)
             <div class="book-card group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-delay="{{ ($index % 4) * 80 }}">
                 <div class="relative aspect-[5/7] bg-gradient-to-br from-slate-50 to-blue-50 overflow-hidden">
-                    @if($book->license == 'Buku Edisi Terbatas')
-                        <div class="absolute top-2.5 left-2.5 bg-red-500 text-white text-[9px] font-semibold px-2.5 py-1 rounded-md shadow z-10 tracking-wide">TERBATAS</div>
+                    @if($book->license == 'Buku Edisi Terbatas' || $book->license == 'Majalah Edisi Terbatas')
+                        <div class="absolute top-2.5 left-2.5 bg-green-600 text-white text-[9px] font-semibold px-2.5 py-1 rounded-md shadow z-10 tracking-wide">MAJALAH KHUSUS</div>
                     @else
-                        <div class="absolute top-2.5 left-2.5 bg-brand-blue text-white text-[9px] font-semibold px-2.5 py-1 rounded-md shadow z-10 tracking-wide">BARU</div>
+                        <div class="absolute top-2.5 left-2.5 bg-brand-green text-white text-[9px] font-semibold px-2.5 py-1 rounded-md shadow z-10 tracking-wide">MAJALAH BARU</div>
                     @endif
 
                     @if($book->cover_image)
@@ -58,7 +58,7 @@
             @empty
             <div class="col-span-4 text-center py-20">
                 <i class="bi bi-inbox text-5xl text-gray-200"></i>
-                <p class="text-gray-400 font-normal mt-3">Belum ada buku yang tersedia</p>
+                <p class="text-gray-400 font-normal mt-3">Belum ada majalah yang tersedia</p>
             </div>
             @endforelse
         </div>
@@ -130,7 +130,7 @@
             </span>
             <h2 class="section-title text-3xl lg:text-4xl">Jelajahi Kategori</h2>
             <div class="section-divider"></div>
-            <p class="text-gray-400 mt-4 text-sm font-normal">Temukan buku berdasarkan topik yang Anda minati.</p>
+            <p class="text-gray-400 mt-4 text-sm font-normal">Temukan majalah berdasarkan topik yang Anda minati.</p>
         </div>
 
         @php
@@ -178,7 +178,7 @@
             Mulai Perjalanan Literasi<br>Bersama Serindit
         </h2>
         <p class="text-white/50 text-base mb-8 font-normal leading-relaxed">
-            Ribuan buku menunggu Anda. Gratis, mudah diakses, dan hadir untuk semua kalangan.
+            Ribuan edisi majalah menunggu Anda. Gratis, mudah diakses, dan hadir untuk semua kalangan.
         </p>
         <a href="#koleksi"
            class="inline-flex items-center gap-2.5 px-8 py-3.5 bg-brand-yellow text-white font-semibold text-sm rounded-xl shadow-xl badge-pulse hover:bg-yellow-400 hover:-translate-y-0.5 transition-all duration-200">

@@ -667,6 +667,7 @@ if (!Array.isArray(tocItems)) {
     tocItems = [];
 }
 
+<<<<<<< HEAD
 function renderToc(){
 
 const tbody=document.getElementById('toc_tbody')
@@ -756,7 +757,6 @@ document.addEventListener('DOMContentLoaded',function(){
 renderToc()
 
 })
-
 </script>
 
 @endsection

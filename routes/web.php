@@ -13,6 +13,16 @@ use App\Http\Controllers\Web\HelpController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/koleksi', [BookListController::class, 'index'])->name('book.list');
 Route::get('/bantuan', [HelpController::class, 'index'])->name('help');
+
+// Static routes
+Route::view('/puisi', 'public.static.puisi')->name('static.puisi');
+Route::view('/cerpen', 'public.static.cerpen')->name('static.cerpen');
+Route::view('/pantun', 'public.static.pantun')->name('static.pantun');
+Route::view('/laman-melayu', 'public.static.laman_melayu')->name('static.laman_melayu');
+Route::view('/warta-basa', 'public.static.warta_basa')->name('static.warta_basa');
+Route::view('/panduan-penulisan', 'public.static.panduan_penulisan')->name('static.panduan_penulisan');
+Route::view('/kontak', 'public.static.kontak')->name('static.kontak');
+
 Route::get('/buku/{id}', [BookListController::class, 'show'])->name('book.show');
 Route::post('/buku/{id}/like', [\App\Http\Controllers\Web\BookListController::class, 'toggleLike'])->name('book.like');
 Route::get('/baca/{slug}', function ($slug) {

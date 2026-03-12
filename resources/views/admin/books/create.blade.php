@@ -724,7 +724,6 @@
                 </div>
             </div>
         </div>
-
         <!-- SECTION: Kategori -->
         <div class="col-12">
             <div class="form-section">
@@ -813,16 +812,12 @@ function removePdf() {
     document.getElementById('pdfUploadArea').style.display = 'flex';
 }
 
-
-/* =========================
-   SCRIPT DAFTAR ISI (TOC)
-========================= */
-
 let tocItems = [];
 
 function renderToc() {
     const tbody = document.getElementById('toc_tbody');
     tbody.innerHTML = '';
+<<<<<<< HEAD
 
     if (tocItems.length === 0) {
         tbody.innerHTML =
@@ -877,9 +872,13 @@ function addTocRow() {
 
 function updateTocRow(index, field, value) {
     tocItems[index][field] = value;
+<<<<<<< HEAD
 
     document.getElementById('toc_hidden_input').value =
         JSON.stringify(tocItems);
+=======
+    document.getElementById('toc_hidden_input').value = JSON.stringify(tocItems);
+>>>>>>> 48d03c6a0c14251540bf3f61babbfab67705e4b7
 }
 
 function removeTocRow(index) {
@@ -887,9 +886,14 @@ function removeTocRow(index) {
     renderToc();
 }
 
+<<<<<<< HEAD
 document.addEventListener('DOMContentLoaded', function () {
     renderToc();
 });
+=======
+document.addEventListener('DOMContentLoaded', () => { renderToc(); });
+
+>>>>>>> 48d03c6a0c14251540bf3f61babbfab67705e4b7
 </script>
 
 @endsection
