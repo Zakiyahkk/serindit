@@ -442,6 +442,18 @@
                     if (e.key === 'ArrowLeft') pageFlip.flipPrev();
                     if (e.key === 'ArrowRight') pageFlip.flipNext();
                 });
+
+                // ── Navigasi langsung dari Daftar Isi (?page=N) ──
+                const urlParams = new URLSearchParams(window.location.search);
+                const startPage = parseInt(urlParams.get('page'));
+                if (!isNaN(startPage) && startPage > 1) {
+                    // Tunda sedikit agar animasi flip berjalan dengan baik setelah load
+                    setTimeout(() => {
+                        const targetIdx = startPage - 1;
+                        pageFlip.flip(targetIdx);
+                        document.getElementById('page-info').innerText = `${startPage} / ${count}`;
+                    }, 600);
+                }
             }
         });
     </script>

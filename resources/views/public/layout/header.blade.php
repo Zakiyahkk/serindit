@@ -68,15 +68,15 @@
 
             <!-- Dropdown Kanal Naskah -->
             <div class="relative group">
-                <button class="px-2 py-2 rounded-full transition flex items-center gap-1.5 {{ request()->routeIs('static.panduan_penulisan') || request()->routeIs('static.kontak') ? 'text-white bg-white/15' : 'hover:text-white hover:bg-white/10' }}">
+                <button class="px-2 py-2 rounded-full transition flex items-center gap-1.5 {{ request()->routeIs('static.panduan_penulisan') || request()->routeIs('naskah.create') || request()->routeIs('naskah.sukses') ? 'text-white bg-white/15' : 'hover:text-white hover:bg-white/10' }}">
                     <i class="bi bi-envelope-paper"></i> Kanal Naskah <i class="bi bi-chevron-down text-[9px] ml-0.5"></i>
                 </button>
                 <div class="absolute top-full right-0 mt-2 w-56 bg-white rounded-xl shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 text-gray-800 flex flex-col border border-gray-100">
                     <a href="{{ route('static.panduan_penulisan') }}" class="px-4 py-2 text-sm hover:bg-brand-sky/10 hover:text-brand-green transition font-medium flex items-center gap-2">
                         <i class="bi bi-journal-bookmark text-brand-green/70"></i> Panduan Penulisan
                     </a>
-                    <a href="{{ route('static.kontak') }}" class="px-4 py-2 text-sm hover:bg-brand-sky/10 hover:text-brand-green transition font-medium flex items-center gap-2">
-                        <i class="bi bi-telephone text-brand-green/70"></i> Kontak Redaksi
+                    <a href="{{ route('naskah.create') }}" class="px-4 py-2 text-sm hover:bg-brand-sky/10 hover:text-brand-green transition font-medium flex items-center gap-2">
+                        <i class="bi bi-send text-brand-green/70"></i> Kirim Naskah
                     </a>
                 </div>
             </div>

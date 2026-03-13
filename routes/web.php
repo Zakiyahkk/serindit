@@ -14,6 +14,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/koleksi', [BookListController::class, 'index'])->name('book.list');
 Route::get('/bantuan', [HelpController::class, 'index'])->name('help');
 
+// Kanal Naskah (Publik — tanpa login)
+Route::get('/kirim-naskah', [\App\Http\Controllers\Web\SubmissionController::class, 'create'])->name('naskah.create');
+Route::post('/kirim-naskah', [\App\Http\Controllers\Web\SubmissionController::class, 'store'])->name('naskah.store');
+Route::get('/kirim-naskah/sukses', [\App\Http\Controllers\Web\SubmissionController::class, 'sukses'])->name('naskah.sukses');
+
 // Static routes
 Route::view('/puisi', 'public.static.puisi')->name('static.puisi');
 Route::view('/cerpen', 'public.static.cerpen')->name('static.cerpen');
@@ -119,6 +124,16 @@ Route::prefix('admin')
 
         Route::post('/pengaturan/delete', [APengaturanController::class, 'destroy'])
             ->name('admin.pengaturan.destroy');
+
+        // ===== KIRIMAN NASKAH =====
+        Route::get('/submissions', [\App\Http\Controllers\Admin\SubmissionController::class, 'index'])
+            ->name('admin.submissions.index');
+        Route::get('/submissions/{id}', [\App\Http\Controllers\Admin\SubmissionController::class, 'show'])
+            ->name('admin.submissions.show');
+        Route::patch('/submissions/{id}/status', [\App\Http\Controllers\Admin\SubmissionController::class, 'updateStatus'])
+            ->name('admin.submissions.updateStatus');
+        Route::delete('/submissions/{id}', [\App\Http\Controllers\Admin\SubmissionController::class, 'destroy'])
+            ->name('admin.submissions.destroy');
 
     });
 

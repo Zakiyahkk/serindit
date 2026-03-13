@@ -142,6 +142,47 @@
                     </div>
                 </div>
 
+                {{-- Daftar Isi --}}
+                @php
+                    $tocItems = [];
+                    if ($book->table_of_contents) {
+                        $decoded = json_decode($book->table_of_contents, true);
+                        if (is_array($decoded) && count($decoded) > 0) {
+                            $tocItems = $decoded;
+                        }
+                    }
+                @endphp
+
+                @if(count($tocItems) > 0)
+                <div class="mb-8 px-4 lg:px-0">
+                    <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-3 flex items-center justify-start gap-2">
+                        <i class="bi bi-list-ul text-brand-blue"></i>
+                        <span>Daftar Isi</span>
+                    </p>
+                    <div class="rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                        @foreach($tocItems as $index => $item)
+                            <a href="{{ route('book.read', $book->slug ?? $book->id) }}?page={{ $item['page'] ?? 1 }}"
+                               class="toc-entry flex items-center justify-between gap-4 px-5 py-3.5 {{ $index % 2 === 0 ? 'bg-white' : 'bg-gray-50/60' }} hover:bg-brand-blue/5 transition-colors group no-underline">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <span class="flex-shrink-0 w-5 h-5 rounded-full bg-brand-blue/10 flex items-center justify-center text-[9px] font-black text-brand-blue">
+                                        {{ $index + 1 }}
+                                    </span>
+                                    <span class="text-[13px] font-semibold text-gray-700 group-hover:text-brand-blue transition-colors truncate">
+                                        {{ $item['title'] ?? '' }}
+                                    </span>
+                                </div>
+                                <div class="flex items-center gap-2 flex-shrink-0">
+                                    <span class="text-[11px] font-bold text-gray-400 group-hover:text-brand-blue/70 transition-colors">
+                                        Hal. {{ $item['page'] ?? '' }}
+                                    </span>
+                                    <i class="bi bi-arrow-right-short text-gray-300 group-hover:text-brand-blue transition-colors text-base"></i>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
                 {{-- Taxonomic Badges --}}
                 <div class="space-y-6 px-4 lg:px-0">
                     <div class="grid grid-cols-1 land-grid-cols-2 lg:grid-cols-1 gap-6">
