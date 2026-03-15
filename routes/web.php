@@ -19,14 +19,30 @@ Route::get('/kirim-naskah', [\App\Http\Controllers\Web\SubmissionController::cla
 Route::post('/kirim-naskah', [\App\Http\Controllers\Web\SubmissionController::class, 'store'])->name('naskah.store');
 Route::get('/kirim-naskah/sukses', [\App\Http\Controllers\Web\SubmissionController::class, 'sukses'])->name('naskah.sukses');
 
-// Static routes
-Route::view('/puisi', 'public.static.puisi')->name('static.puisi');
-Route::view('/cerpen', 'public.static.cerpen')->name('static.cerpen');
-Route::view('/pantun', 'public.static.pantun')->name('static.pantun');
-Route::view('/laman-melayu', 'public.static.laman_melayu')->name('static.laman_melayu');
-Route::view('/warta-basa', 'public.static.warta_basa')->name('static.warta_basa');
+use App\Http\Controllers\Web\JejakPenaController;
+use App\Http\Controllers\Web\PantunSyairController;
+
+// Static routes — Jejak Pena
+Route::get('/puisi', [JejakPenaController::class, 'puisiIndex'])->name('static.puisi');
+Route::get('/puisi/{slug}', [JejakPenaController::class, 'puisiShow'])->name('puisi.show');
+Route::get('/cerpen', [JejakPenaController::class, 'cerpenIndex'])->name('static.cerpen');
+Route::get('/cerpen/{slug}', [JejakPenaController::class, 'cerpenShow'])->name('cerpen.show');
+
+// Laman Melayu Publik
+Route::get('/laman-melayu', [\App\Http\Controllers\Web\LamanMelayuController::class, 'index'])->name('laman_melayu.index');
+Route::get('/laman-melayu/{slug}', [\App\Http\Controllers\Web\LamanMelayuController::class, 'show'])->name('laman_melayu.show');
+
+// Warta Basa Publik
+Route::get('/warta-basa', [\App\Http\Controllers\Web\WartaBasaController::class, 'index'])->name('warta_basa.index');
+Route::get('/warta-basa/{slug}', [\App\Http\Controllers\Web\WartaBasaController::class, 'show'])->name('warta_basa.show');
+
 Route::view('/panduan-penulisan', 'public.static.panduan_penulisan')->name('static.panduan_penulisan');
 Route::view('/kontak', 'public.static.kontak')->name('static.kontak');
+
+// Pantun & Syair
+Route::get('/pantun-syair', [PantunSyairController::class, 'index'])->name('pantun_syair.index');
+Route::get('/pantun/{slug}', [PantunSyairController::class, 'showPantun'])->name('pantun.show');
+Route::get('/syair/{slug}', [PantunSyairController::class, 'showSyair'])->name('syair.show');
 
 Route::get('/buku/{id}', [BookListController::class, 'show'])->name('book.show');
 Route::post('/buku/{id}/like', [\App\Http\Controllers\Web\BookListController::class, 'toggleLike'])->name('book.like');
@@ -134,6 +150,32 @@ Route::prefix('admin')
             ->name('admin.submissions.updateStatus');
         Route::delete('/submissions/{id}', [\App\Http\Controllers\Admin\SubmissionController::class, 'destroy'])
             ->name('admin.submissions.destroy');
+
+        // ===== KARYA SASTRA (Jejak Pena) =====
+        Route::get('/karya-sastra', [\App\Http\Controllers\Admin\KaryaSastraController::class, 'index'])->name('admin.karya-sastra.index');
+        Route::get('/karya-sastra/create', [\App\Http\Controllers\Admin\KaryaSastraController::class, 'create'])->name('admin.karya-sastra.create');
+        Route::post('/karya-sastra', [\App\Http\Controllers\Admin\KaryaSastraController::class, 'store'])->name('admin.karya-sastra.store');
+        Route::get('/karya-sastra/{karyaSastra}/edit', [\App\Http\Controllers\Admin\KaryaSastraController::class, 'edit'])->name('admin.karya-sastra.edit');
+        Route::put('/karya-sastra/{karyaSastra}', [\App\Http\Controllers\Admin\KaryaSastraController::class, 'update'])->name('admin.karya-sastra.update');
+        // ===== Laman Melayu =====
+        Route::resource('laman-melayu', \App\Http\Controllers\Admin\LamanMelayuController::class)->names([
+            'index'   => 'admin.laman-melayu.index',
+            'create'  => 'admin.laman-melayu.create',
+            'store'   => 'admin.laman-melayu.store',
+            'edit'    => 'admin.laman-melayu.edit',
+            'update'  => 'admin.laman-melayu.update',
+            'destroy' => 'admin.laman-melayu.destroy',
+        ]);
+
+        // ===== Warta Basa =====
+        Route::resource('warta-basa', \App\Http\Controllers\Admin\WartaBasaController::class)->names([
+            'index'   => 'admin.warta-basa.index',
+            'create'  => 'admin.warta-basa.create',
+            'store'   => 'admin.warta-basa.store',
+            'edit'    => 'admin.warta-basa.edit',
+            'update'  => 'admin.warta-basa.update',
+            'destroy' => 'admin.warta-basa.destroy',
+        ]);
 
     });
 

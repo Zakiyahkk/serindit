@@ -191,6 +191,30 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{ route('admin.karya-sastra.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.karya-sastra*') ? 'active' : '' }}">
+                            <i class="bi bi-feather"></i>
+                            <span>Jejak Pena</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.laman-melayu.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.laman-melayu*') ? 'active' : '' }}">
+                            <i class="bi bi-pen"></i>
+                            <span>Laman Melayu</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('admin.warta-basa.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.warta-basa*') ? 'active' : '' }}">
+                            <i class="bi bi-newspaper"></i>
+                            <span>Warta Basa</span>
+                        </a>
+                    </li>
+
                     @if (strtolower(session('admin_role')) === 'super_admin')
                         <li class="nav-item">
                             <a href="{{ route('admin.pengaturan') }}"
