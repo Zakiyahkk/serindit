@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -13,20 +12,18 @@ class Book extends Model
         'title',
         'slug',
         'description',
-        'contributors',
-        'license',
-        'reading_level_id',
+
+        'volume',
+        'nomor',
+        'terbitan',
+        'issn',
+
         'cover_image',
         'pdf_file',
-    ];
 
-    /**
-     * Tingkat baca buku ini.
-     */
-    public function readingLevel(): BelongsTo
-    {
-        return $this->belongsTo(ReadingLevel::class);
-    }
+        'table_of_contents',
+        'page_offset',
+    ];
 
     /**
      * Statistik buku (views, likes, reads).
@@ -37,7 +34,7 @@ class Book extends Model
     }
 
     /**
-     * Kategori-kategori buku ini (many-to-many).
+     * Kategori buku (many-to-many).
      */
     public function categories(): BelongsToMany
     {
@@ -45,7 +42,7 @@ class Book extends Model
     }
 
     /**
-     * Jenis-jenis buku ini (many-to-many).
+     * Jenis buku (many-to-many).
      */
     public function bookTypes(): BelongsToMany
     {
@@ -57,7 +54,9 @@ class Book extends Model
      */
     public function getCoverUrlAttribute(): ?string
     {
-        return $this->cover_image ? asset('storage/' . $this->cover_image) : null;
+        return $this->cover_image
+            ? asset('storage/' . $this->cover_image)
+            : null;
     }
 
     /**
@@ -65,6 +64,8 @@ class Book extends Model
      */
     public function getPdfUrlAttribute(): ?string
     {
-        return $this->pdf_file ? asset('storage/' . $this->pdf_file) : null;
+        return $this->pdf_file
+            ? asset('storage/' . $this->pdf_file)
+            : null;
     }
 }

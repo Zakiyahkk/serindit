@@ -8,7 +8,7 @@
            PAGE HERO — Majalah (Ungu)
         ══════════════════════════════════ */
         .page-hero {
-            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 60%, #7c3aed 100%);
+            background: linear-gradient(135deg, #d14563 0%, #ce0632 60%, #ed3a3a 100%);
             border-radius: 16px;
             padding: 28px 32px;
             color: #fff;
@@ -403,22 +403,22 @@
         }
 
         .btn-view {
-            background: #eff6ff;
-            color: #3b82f6;
+            background: #effff1;
+            color: #16a34a;
         }
 
         .btn-view:hover {
-            background: #3b82f6;
+            background: #16a34a;
             color: #fff;
         }
 
         .btn-edit-g {
-            background: #f0fdf4;
-            color: #16a34a;
+            background: #fafdf0;
+            color: #e09d00ff;
         }
 
         .btn-edit-g:hover {
-            background: #16a34a;
+            background: #e09d00ff;
             color: #fff;
         }
 
@@ -523,6 +523,12 @@
         .btn-hapus-confirm:hover {
             background: #dc2626;
         }
+
+        .book-contributors {
+            font-size: 13px;
+            color: #374151;
+            line-height: 1.4;
+        }
     </style>
 @endpush
 
@@ -532,9 +538,9 @@
     <div class="page-hero">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h2><i class="bi bi-book-half me-2"></i>Daftar Buku</h2>
-                <p>Kelola koleksi buku perpustakaan digital Sembari &mdash;
-                    <strong style="opacity:1;">{{ $totalAll }}</strong> buku tersedia
+                <h2><i class="bi bi-book-half me-2"></i>Daftar Majalah</h2>
+                <p>Kelola koleksi majalah Serindit &mdash;
+                    <strong style="opacity:1;">{{ $totalAll }}</strong> majalah tersedia
                 </p>
             </div>
             <a href="{{ route('admin.books.create') }}" class="btn-add">
@@ -561,7 +567,7 @@
             <div class="search-group">
                 <i class="bi bi-search"></i>
                 <input type="text" name="search" id="searchInput" value="{{ $search }}"
-                    placeholder="Cari judul atau kontributor..." autocomplete="off">
+                    placeholder="Cari judul atau ISSN..." autocomplete="off">
             </div>
 
             {{-- Filter Kategori --}}
@@ -583,7 +589,7 @@
             </select>
 
             {{-- Reset (muncul jika ada filter aktif) --}}
-            @if ($search || $kategori || $lisensi || $sort !== 'terbaru')
+            @if ($search || $kategori || $sort !== 'terbaru')
                 <a href="{{ route('admin.books.index') }}" class="btn-reset">
                     <i class="bi bi-x-circle"></i> Reset
                 </a>
@@ -592,7 +598,7 @@
         </div>
 
         {{-- Pill Filter Lisensi --}}
-        <div class="lisensi-pills mb-3">
+        {{-- <div class="lisensi-pills mb-3">
             <a href="{{ route('admin.books.index', array_merge(request()->except(['lisensi', 'page']), ['search' => $search, 'kategori' => $kategori, 'sort' => $sort])) }}"
                 class="pill {{ !$lisensi ? 'active-all' : '' }}">
                 <i class="bi bi-grid me-1"></i> Semua
@@ -605,7 +611,7 @@
                 class="pill {{ Str::contains($lisensi, 'Terbatas') ? 'active-tbts' : '' }}">
                 <i class="bi bi-lock-fill me-1"></i> Edisi Terbatas
             </a>
-        </div>
+        </div> --}}
 
     </form>
 
@@ -614,7 +620,7 @@
         <div class="books-card-header">
             <h6>
                 <span
-                    style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#6366f1,#4f46e5);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:13px;">
+                    style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#d14563,#ce0632);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:13px;">
                     <i class="bi bi-book-fill"></i>
                 </span>
                 Koleksi Majalah
@@ -622,7 +628,7 @@
             <div class="result-info">
                 Menampilkan <strong>{{ $books->firstItem() ?? 0 }}–{{ $books->lastItem() ?? 0 }}</strong>
                 dari <strong>{{ $books->total() }}</strong> majalah
-                @if ($search || $kategori || $lisensi)
+                @if ($search || $kategori)
                     &mdash; <span style="color:#6366f1;">filter aktif</span>
                 @endif
             </div>
@@ -634,8 +640,8 @@
                     <thead>
                         <tr>
                             <th width="70">Cover</th>
-                            <th>Judul Majalah</th>
-                            <th width="160">Lisensi</th>
+                            <th width="40%">Judul Majalah</th>
+                            <th width="30%">Detail</th>
                             <th width="130" class="text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -657,25 +663,19 @@
                                     @if ($book->description)
                                         <div class="book-desc">{{ Str::limit($book->description, 90) }}</div>
                                     @endif
-                                    @if ($book->contributors)
-                                        <div class="book-contributors">
-                                            <i class="bi bi-people me-1" style="color:#6366f1;"></i>
-                                            {{ Str::limit(str_replace("\n", ' · ', $book->contributors), 70) }}
-                                        </div>
-                                    @endif
                                 </td>
                                 <td>
-                                    @if (Str::contains($book->license, 'Terbatas'))
-                                        <span class="badge-terbatas">
-                                            <i class="bi bi-lock-fill me-1"></i>Edisi Terbatas
-                                        </span>
-                                    @elseif(Str::contains($book->license, 'Umum'))
-                                        <span class="badge-umum">
-                                            <i class="bi bi-globe me-1"></i>Edisi Umum
-                                        </span>
-                                    @else
-                                        <span class="badge-none">—</span>
-                                    @endif
+                                    <div style="font-size:13px; line-height:1.5; color:#374151;">
+                                        <div>
+                                            Volume {{ $book->volume }},
+                                            Nomor {{ $book->nomor }},
+                                            {{ $book->terbitan }}
+                                        </div>
+
+                                        <div style="color:#64748b; font-size:12px;">
+                                            ISSN {{ $book->issn }}
+                                        </div>
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="action-btns justify-content-center">
@@ -684,10 +684,10 @@
                                             <i class="bi bi-eye"></i>
                                         </a>
                                         <a href="{{ route('admin.books.edit', $book->id) }}" class="btn-action btn-edit-g"
-                                            title="Edit Buku">
+                                            title="Edit Majalah">
                                             <i class="bi bi-pencil"></i>
                                         </a>
-                                        <button type="button" class="btn-action btn-delete" title="Hapus Buku"
+                                        <button type="button" class="btn-action btn-delete" title="Hapus Majalah"
                                             onclick="openDeleteModal({{ $book->id }}, '{{ addslashes($book->title) }}')">
                                             <i class="bi bi-trash"></i>
                                         </button>
@@ -707,7 +707,7 @@
         @else
             <div class="empty-state">
                 <div class="empty-icon"><i class="bi bi-inbox"></i></div>
-                @if ($search || $kategori || $lisensi)
+                @if ($search || $kategori)
                     <h5>Tidak Ada Hasil</h5>
                     <p>Tidak ada majalah yang cocok dengan filter yang dipilih.</p>
                     <a href="{{ route('admin.books.index') }}" class="btn-add d-inline-flex"
@@ -715,8 +715,8 @@
                         <i class="bi bi-x-circle"></i> Hapus Filter
                     </a>
                 @else
-                    <h5>Belum Ada Buku</h5>
-                    <p>Mulai tambahkan buku ke perpustakaan digital Sembari</p>
+                    <h5>Belum Ada Majalah</h5>
+                    <p>Mulai tambahkan Majalah Serindit</p>
                     <a href="{{ route('admin.books.create') }}" class="btn-add d-inline-flex"
                         style="background:#6366f1;border-color:#6366f1;">
                         <i class="bi bi-plus-circle-fill"></i> Tambah Majalah Pertama
@@ -746,12 +746,12 @@
                             <i class="bi bi-trash-fill" style="font-size:26px;color:#ef4444;"></i>
                         </div>
                         <p style="font-size:14px;font-weight:600;color:#1e293b;margin-bottom:8px;">
-                            Hapus buku ini?
+                            Hapus majalah ini?
                         </p>
                         <p id="deleteBookTitle" style="font-size:13px;color:#6366f1;font-weight:700;margin-bottom:8px;">
                         </p>
                         <p style="font-size:13px;color:#64748b;margin:0;">
-                            Cover, PDF, dan semua data buku akan dihapus permanen.
+                            Cover, PDF, dan semua data majalah akan dihapus permanen.
                         </p>
                     </div>
                     <div class="modal-footer">

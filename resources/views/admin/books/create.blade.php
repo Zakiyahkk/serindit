@@ -12,7 +12,7 @@
         padding-bottom: 0;
     }
     .form-control.description-area {
-        height: 135px;
+        height: 120px;
     }
     .form-section {
         background: #fff;
@@ -397,7 +397,7 @@
                     </div>
                     <div>
                         <h6>Informasi Utama</h6>
-                        <p>Judul dan deskripsi majalah</p>
+                        <p>Judul dan sub judul majalah</p>
                     </div>
                 </div>
                 <div class="form-section-body">
@@ -415,13 +415,13 @@
                         @enderror
                     </div>
 
-                    <!-- Deskripsi -->
+                    <!-- Sub Judul -->
                     <div class="mb-0">
-                        <label class="form-label">Deskripsi / Sinopsis</label>
+                        <label class="form-label">Sub Judul</label>
                         <textarea
                             class="form-control description-area @error('description') is-invalid @enderror"
                             name="description"
-                            placeholder="Tulis sinopsis atau deskripsi singkat majalah...">{{ old('description') }}</textarea>
+                            placeholder="Tulis sub judul majalah...">{{ old('description') }}</textarea>
                         @error('description')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -442,15 +442,40 @@
                 </div>
                 <div class="form-section-body">
                     <div class="mb-0">
-                        <label class="form-label">Detail Majalah</label>
-                        <textarea class="form-control description-area @error('contributors') is-invalid @enderror"
-                                  name="contributors"
-                                  rows="3"
-                                  placeholder="Contoh:&#10;Penulis: John Doe&#10;Ilustrator: Jane Smith&#10;Penerjemah: Bob Wilson">{{ old('contributors') }}</textarea>
-                        <small class="text-muted mt-1 d-block">
-                            <i class="bi bi-info-circle me-1"></i>
-                            Tulis satu detail per baris
-                        </small>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Volume</label>
+                                <input type="text"
+                                    name="volume"
+                                    class="form-control"
+                                    placeholder="Contoh: 4">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Nomor</label>
+                                <input type="text"
+                                    name="nomor"
+                                    class="form-control"
+                                    placeholder="Contoh: 1">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Terbitan</label>
+                                <input type="text"
+                                    name="terbitan"
+                                    class="form-control"
+                                    placeholder="Contoh: Juni 2022">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">ISSN</label>
+                                <input type="text"
+                                    name="issn"
+                                    class="form-control"
+                                    placeholder="Contoh: 2723-0023">
+                            </div>
+
+                        </div>
                         @error('contributors')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -556,8 +581,7 @@
                         <ul class="mb-0 ps-3" style="line-height:1.9;">
                             <li>Cover digunakan sebagai thumbnail di halaman utama</li>
                             <li>PDF adalah isi majalah yang bisa dibaca via flipbook</li>
-                            <li>Tingkat pembaca membantu filter pencarian</li>
-                            <li>Pilih kategori yang paling sesuai isi majalah</li>
+                            <li>Detail majalah berisi tentang informasi edisi dan nomor ISSN majalah</li>
                         </ul>
                     </div>
                 </div>
@@ -567,7 +591,7 @@
 
 
         <!-- SECTION: Lisensi & Tingkat Pembaca (FULL WIDTH) -->
-        <div class="col-12">
+        {{-- <div class="col-12">
             <div class="form-section">
                 <div class="form-section-header">
                     <div class="section-icon" style="background: linear-gradient(135deg,#f59e0b,#d97706);">
@@ -646,10 +670,61 @@
 
                 </div>
             </div>
+        </div> --}}
+
+        <!-- SECTION: Daftar Isi (FULL WIDTH) -->
+        <div class="col-12">
+            <div class="form-section">
+                <div class="form-section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg,#8b5cf6,#7c3aed);">
+                        <i class="bi bi-list-ol"></i>
+                    </div>
+                    <div>
+                        <h6>Daftar Isi Majalah</h6>
+                        <p>Navigasi interaktif untuk Flipbook Reader</p>
+                    </div>
+                </div>
+
+                <div class="form-section-body">
+
+                    <input type="hidden"
+                        name="table_of_contents"
+                        id="toc_hidden_input"
+                        value="[]">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-sm mb-3">
+                            <thead style="background:#f8fafc;">
+                                <tr>
+                                    <th width="60%" class="text-muted" style="font-size:12px;font-weight:600;">
+                                        Judul Bab / Bagian
+                                    </th>
+                                    <th width="30%" class="text-muted" style="font-size:12px;font-weight:600;">
+                                        Halaman
+                                    </th>
+                                    <th width="10%" class="text-center text-muted" style="font-size:12px;font-weight:600;">
+                                        Aksi
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="toc_tbody">
+                                <!-- dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button type="button"
+                            class="btn btn-sm btn-light border"
+                            onclick="addTocRow()">
+                        <i class="bi bi-plus-circle me-1"></i>
+                        Tambah Baris
+                    </button>
+
+                </div>
+            </div>
         </div>
-
-
-        <!-- SECTION: Jenis & Kategori -->
+        <!-- SECTION: Kategori -->
         <div class="col-12">
             <div class="form-section">
                 <div class="form-section-header">
@@ -657,26 +732,11 @@
                         <i class="bi bi-tags"></i>
                     </div>
                     <div>
-                        <h6>Jenis & Kategori</h6>
+                        <h6>Kategori</h6>
                         <p>Klasifikasi majalah (bisa pilih lebih dari satu)</p>
                     </div>
                 </div>
                 <div class="form-section-body">
-                    <div class="mb-4">
-                        <label class="form-label">Jenis Majalah</label>
-                        <div class="check-grid">
-                            @foreach($bookTypes as $type)
-                                <label class="check-item">
-                                    <input type="checkbox"
-                                           name="book_types[]"
-                                           value="{{ $type->id }}"
-                                           {{ in_array($type->id, old('book_types', [])) ? 'checked' : '' }}>
-                                    <label style="pointer-events:none;">{{ $type->name }}</label>
-                                </label>
-                            @endforeach
-                        </div>
-                    </div>
-
                     <div class="mb-0">
                         <label class="form-label">Kategori</label>
                         <div class="check-grid">
@@ -751,6 +811,78 @@ function removePdf() {
     document.getElementById('pdfPreviewBox').style.display = 'none';
     document.getElementById('pdfUploadArea').style.display = 'flex';
 }
+
+let tocItems = [];
+
+function renderToc() {
+    const tbody = document.getElementById('toc_tbody');
+    tbody.innerHTML = '';
+    if (tocItems.length === 0) {
+        tbody.innerHTML =
+        `<tr>
+            <td colspan="3" class="text-center text-muted py-3" style="font-size:13px">
+                Belum ada daftar isi ditambahkan
+            </td>
+        </tr>`;
+    } else {
+        tocItems.forEach((item, index) => {
+            tbody.innerHTML += `
+            <tr>
+                <td>
+                    <input type="text"
+                        class="form-control form-control-sm"
+                        value="${item.title}"
+                        placeholder="Contoh: Kata Pengantar"
+                        oninput="updateTocRow(${index}, 'title', this.value)">
+                </td>
+
+                <td>
+                    <input type="number"
+                        class="form-control form-control-sm"
+                        value="${item.page}"
+                        placeholder="1"
+                        oninput="updateTocRow(${index}, 'page', this.value)">
+                </td>
+
+                <td class="text-center">
+                    <button type="button"
+                        class="btn btn-sm btn-light text-danger"
+                        onclick="removeTocRow(${index})">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
+            </tr>`;
+        });
+    }
+
+    document.getElementById('toc_hidden_input').value =
+        JSON.stringify(tocItems);
+}
+
+function addTocRow() {
+    tocItems.push({
+        title: '',
+        page: ''
+    });
+
+    renderToc();
+}
+
+function updateTocRow(index, field, value) {
+    tocItems[index][field] = value;
+
+    document.getElementById('toc_hidden_input').value =
+        JSON.stringify(tocItems);
+}
+
+function removeTocRow(index) {
+    tocItems.splice(index, 1);
+    renderToc();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    renderToc();
+});
 </script>
 
 @endsection

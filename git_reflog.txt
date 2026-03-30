@@ -1,0 +1,6 @@
+37f55c7 HEAD@{0}: pull --tags origin main: Fast-forward
+87af68c HEAD@{1}: pull --tags origin main: Fast-forward
+8bf0c68 HEAD@{2}: commit: update
+4bab6fd HEAD@{3}: commit (merge): update
+9dff187 HEAD@{4}: commit: update
+0f121f6 HEAD@{5}: clone: from https://github.com/Zakiyahkk/serindit.git
