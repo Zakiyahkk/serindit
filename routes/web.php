@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\APengaturanController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\TulisanController;
+use App\Http\Controllers\Admin\NaskahController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\BookListController;
@@ -11,6 +13,7 @@ use App\Http\Controllers\Web\HelpController;
 
 // --- PUBLIC ROUTES ---
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/tulisan/{slug}', [TulisanController::class, 'show'])->name('tulisan.show');
 Route::get('/koleksi', [BookListController::class, 'index'])->name('book.list');
 Route::get('/bantuan', [HelpController::class, 'index'])->name('help');
 Route::get('/buku/{id}', [BookListController::class, 'show'])->name('book.show');
@@ -88,6 +91,27 @@ Route::prefix('admin')
             'update'  => 'admin.books.update',
             'destroy' => 'admin.books.destroy',
         ]);
+
+         // ===== TULISAN =====
+        Route::resource('tulisan', TulisanController::class)->names([
+            'index'   => 'admin.tulisan.index',
+            'create'  => 'admin.tulisan.create',
+            'store'   => 'admin.tulisan.store',
+            'show'    => 'admin.tulisan.show',
+            'edit'    => 'admin.tulisan.edit',
+            'update'  => 'admin.tulisan.update',
+            'destroy' => 'admin.tulisan.destroy',
+        ])->except(['show']);
+
+        // ===== NASKAH =====
+        Route::prefix('naskah')->name('admin.naskah.')->controller(\App\Http\Controllers\Admin\NaskahController::class)->group(function () {
+            Route::get('/',                  'index')   ->name('index');
+            Route::get('/{naskah}',          'show')    ->name('show');
+            Route::post('/{naskah}/setujui', 'setujui') ->name('setujui');
+            Route::post('/{naskah}/tolak',   'tolak')   ->name('tolak');
+            Route::post('/{naskah}/reset',   'reset')   ->name('reset');
+            Route::delete('/{naskah}',       'destroy') ->name('destroy');  
+            });
 
         // ===== KATEGORI =====
         Route::resource('categories', CategoryController::class)->names([
