@@ -176,14 +176,6 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('admin.categories.index') }}"
-                            class="nav-link {{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
-                            <i class="bi bi-pencil-square"></i>
-                            <span>Tulisan</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
                         <a href="{{ route('admin.submissions.index') }}"
                             class="nav-link {{ request()->routeIs('admin.submissions*') ? 'active' : '' }}">
                             <i class="bi bi-file-earmark-richtext"></i>
