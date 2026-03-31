@@ -249,6 +249,49 @@ align-items:center;
 gap:7px;
 }
 
+.toc-item-inline{
+display:grid;
+grid-template-columns: 1fr 20px;
+align-items:start;
+gap:10px;
+padding:10px 10px;
+border-radius:10px;
+cursor:pointer;
+transition:.2s;
+margin-bottom:6px;
+}
+
+.toc-title{
+font-size:13.5px;
+font-weight:500;
+color:#334155;
+line-height:1.4;
+}
+
+.toc-page{
+font-size:12px;
+font-weight:600;
+color:#94a3b8;
+text-align:right;
+}
+
+.toc-item-inline:hover{
+background:#f8fafc;
+transform:translateX(4px);
+}
+
+.toc-title{
+font-size:13.5px;
+font-weight:500;
+color:#334155;
+}
+
+.toc-page{
+font-size:12px;
+font-weight:600;
+color:#94a3b8;
+}
+
 </style>
 @endpush
 
@@ -344,7 +387,50 @@ Belum ada file PDF
 </div>
 </div>
 
+@if($book->table_of_contents && count(json_decode($book->table_of_contents, true) ?? []) > 0)
+
+<div class="info-card">
+
+    <div class="info-card-header">
+        <div class="ic-icon" style="background:linear-gradient(135deg,#22c55e,#16a34a);">
+            <i class="bi bi-list-ul"></i>
+        </div>
+        <h6>Daftar Isi</h6>
+    </div>
+
+    <div class="info-card-body">
+
+        @php $tocItems = json_decode($book->table_of_contents, true) ?? []; @endphp
+
+        @foreach($tocItems as $item)
+            <div class="toc-item-inline"
+                onclick="window.open('{{ route('book.read', $book->id) }}?page={{ $item['page'] ?? 1 }}', '_blank')">
+
+                <span class="toc-title">
+                    {{ $item['title'] ?? '' }}
+                </span>
+
+                <span class="toc-page">
+                    {{ $item['page'] ?? '' }}
+                </span>
+
+            </div>
+        @endforeach
+
+    </div>
+
 </div>
+
+@endif
+
+</div>
+
+<script>
+function jumpToPage(page) {
+    let pdfUrl = "{{ asset('storage/'.$book->pdf_file) }}";
+    window.open(pdfUrl + "#page=" + page, "_blank");
+}
+</script>
 
 <div class="col-lg-8">
 
