@@ -101,12 +101,75 @@
             </button>
         </form>
 
-        {{-- Mobile Hamburger --}}
-        <button class="md:hidden text-white p-2">
+        {{-- Mobile Hamburger Button --}}
+        <button id="mobile-menu-btn" class="lg:hidden text-white p-2 focus:outline-none">
             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
         </button>
 
     </div>
+
+    {{-- Menu Mobile Overlay/Dropdown (Hidden by default) --}}
+    <div id="mobile-menu" class="hidden lg:hidden bg-brand-darkblue border-t border-white/10 px-4 py-4 absolute w-full left-0 top-20 shadow-2xl">
+        <div class="flex flex-col gap-3 font-bold text-sm text-white/90">
+            <a href="{{ route('home') }}" class="px-3 py-2 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="bi bi-house-door"></i> Beranda
+            </a>
+            
+            <a href="{{ route('home') }}#tentang" class="px-3 py-2 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="bi bi-info-circle"></i> Tentang
+            </a>
+
+            <div class="px-3 py-2 text-white/50 text-xs tracking-wider uppercase mt-2 border-b border-white/10 pb-1">Jejak Pena</div>
+            <a href="{{ route('static.puisi') }}" class="px-4 py-2 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="bi bi-journal-text text-brand-sky"></i> Puisi
+            </a>
+            <a href="{{ route('static.cerpen') }}" class="px-4 py-2 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="bi bi-book text-blue-400"></i> Cerpen
+            </a>
+            <a href="{{ route('pantun_syair.index') }}" class="px-4 py-2 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="bi bi-music-note-beamed text-purple-400"></i> Pantun & Syair
+            </a>
+
+            <div class="px-3 py-2 text-white/50 text-xs tracking-wider uppercase mt-2 border-b border-white/10 pb-1">Majalah & Laman</div>
+            <a href="{{ route('laman_melayu.index') }}" class="px-4 py-2 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="bi bi-globe text-orange-400"></i> Laman Melayu
+            </a>
+            <a href="{{ route('warta_basa.index') }}" class="px-4 py-2 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="bi bi-newspaper text-white"></i> Warta Basa
+            </a>
+
+            <div class="px-3 py-2 text-white/50 text-xs tracking-wider uppercase mt-2 border-b border-white/10 pb-1">Kanal Naskah</div>
+            <a href="{{ route('static.panduan_penulisan') }}" class="px-4 py-2 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="bi bi-journal-bookmark text-brand-sky"></i> Panduan Penulisan
+            </a>
+            <a href="{{ route('naskah.create') }}" class="px-4 py-2 rounded-lg hover:bg-white/10 flex items-center gap-3">
+                <i class="bi bi-send text-brand-sky"></i> Kirim Naskah
+            </a>
+            
+            {{-- Mobile Search --}}
+            <form action="{{ route('book.list') }}" method="GET" class="relative mt-4 mb-2">
+                <input type="text" name="q" placeholder="Cari buku..."
+                       class="w-full pl-11 pr-4 py-3 rounded-xl text-sm font-medium text-gray-800 bg-white
+                              focus:ring-2 focus:ring-brand-yellow outline-none">
+                <button type="submit" class="absolute left-4 top-1/2 -translate-y-1/2">
+                    <i class="bi bi-search text-gray-500"></i>
+                </button>
+            </form>
+        </div>
+    </div>
 </nav>
+
+<script>
+    // JS Sederhana untuk Toggle Menu Mobile
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if(btn && menu) {
+            btn.addEventListener('click', function() {
+                menu.classList.toggle('hidden');
+            });
+        }
+    });
+</script>
